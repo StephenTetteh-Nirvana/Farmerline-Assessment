@@ -15,8 +15,8 @@ import {credentials} from "@/mockData"
 import { useNavigate } from 'react-router-dom'
 
 const Login : React.FC = () => {
-  const userData = localStorage.getItem("User") // fetches userKey from localStorage
-  const user = userData !== null ? JSON.parse(userData) : [] // parses key from localStorage based on a condition.
+  // const userData = localStorage.getItem("User")
+  // const user = userData !== null ? JSON.parse(userData) : []
 
   const navigate = useNavigate()
   const [email,setEmail] = useState("")
@@ -30,7 +30,7 @@ const Login : React.FC = () => {
     }else{
       toast("Login Failed",{
         description: "Please check your credentials.",
-        duration: 5000,
+        duration: 2000,
         position: "top-center",
         action: {
           label: "Retry",

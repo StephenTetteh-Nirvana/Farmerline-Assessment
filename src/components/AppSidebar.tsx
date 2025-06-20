@@ -1,6 +1,8 @@
 import { LayoutDashboard, Search, Settings, ChevronUp, User2, LogOut } from "lucide-react"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
+import { toast } from "sonner"
 
+import { Button } from "@/components/ui/button"
 import {
   Sidebar,
   SidebarContent,
@@ -16,7 +18,6 @@ import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
-  DropdownMenuItem
 } from "@/components/ui/dropdown-menu"
 
 // Menu items.
@@ -40,6 +41,22 @@ const items = [
 
 const AppSidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate()
+
+  const logOut = () => {
+    localStorage.clear()
+    setTimeout(()=>{
+     navigate("/login")
+     toast("You logged out",{
+      duration: 2000,
+      position: "top-center",
+      action: {
+        label: "OK",
+        onClick: () => console.log("Logged out"),
+      },
+     });
+    },1000)
+  }
 
   return (
     <Sidebar>
@@ -53,7 +70,6 @@ const AppSidebar = () => {
               className="h-12 w-auto rounded-[35%]"
             />
           </div>
-          {/* <SidebarGroupLabel>FarmerLine Data Dashboard</SidebarGroupLabel> */}
           <SidebarGroupContent>
             <SidebarMenu>
             {items.map((item) => {
@@ -96,13 +112,14 @@ const AppSidebar = () => {
                   <ChevronUp className="ml-auto" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
-              <DropdownMenuContent side="top" className="bg-red-700 text-white">
-                <DropdownMenuItem
-                  className="hover:bg-red-600 hover:text-white cursor-pointer flex items-center gap-2"
+              <DropdownMenuContent side="top">
+                <Button className="hover:bg-red-600 hover:text-white cursor-pointer flex items-center 
+                  gap-2 w-full"
+                  onClick={()=>logOut()}
                 >
-                  <LogOut className="text-white"/>
-                  <span>Sign out</span>
-                </DropdownMenuItem>
+                  <LogOut/>
+                  Logout
+                </Button>
               </DropdownMenuContent>
             </DropdownMenu>
           </SidebarMenuItem>
