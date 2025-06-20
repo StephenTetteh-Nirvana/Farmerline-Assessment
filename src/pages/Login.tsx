@@ -13,7 +13,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from '@/components/ui/label'
 import {credentials} from "@/mockData"
 import { useNavigate } from 'react-router-dom'
-import { User } from 'lucide-react'
 
 const Login : React.FC = () => {
   const userData = localStorage.getItem("User") // fetches userKey from localStorage
