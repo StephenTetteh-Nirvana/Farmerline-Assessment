@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button"
+import { toast } from 'sonner'
 import {
   Card,
   CardContent,
@@ -11,14 +12,42 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from '@/components/ui/label'
 import {credentials} from "@/mockData"
+import { useNavigate } from 'react-router-dom'
+import { User } from 'lucide-react'
 
 const Login : React.FC = () => {
   const userData = localStorage.getItem("User") // fetches userKey from localStorage
   const user = userData !== null ? JSON.parse(userData) : [] // parses key from localStorage based on a condition.
 
+  const navigate = useNavigate()
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState('')
   const [disabled,setDisabled] = useState(true)
+
+  const loginUser = ()=> {
+    if (credentials.email === email && credentials.password === password){
+      localStorage.setItem("User",JSON.stringify(true))
+      navigate('/')
+    }else{
+      toast("Login Failed",{
+        description: "Please check your credentials.",
+        duration: 5000,
+        position: "top-center",
+        action: {
+          label: "Retry",
+          onClick: () => loginUser(),
+        },
+      });
+    }
+  }
+
+  useEffect(()=>{
+    if (email !== "" && password !== ""){
+      setDisabled(false)
+    }else{
+      setDisabled(true)
+    }
+  },[email,password])
 
   return (
     <div className='flex justify-center items-center w-full h-full'>
@@ -65,7 +94,10 @@ const Login : React.FC = () => {
         </form>
       </CardContent>
       <CardFooter className="flex-col">
-        <Button type="submit" className={disabled ? "cursor-not-allowed w-full" : "cursor-pointer w-full"} disabled={disabled}>
+        <Button className={disabled ? "cursor-not-allowed w-full" : "cursor-pointer w-full"} 
+          disabled={disabled}
+          onClick={()=>loginUser()}
+        >
           Login
         </Button>
       </CardFooter>

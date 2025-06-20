@@ -1,5 +1,6 @@
 import { Routes,Route, useLocation } from "react-router-dom"
 import { SidebarProvider,SidebarTrigger } from "./components/ui/sidebar"
+import { Toaster } from "./components/ui/sonner"
 import { useEffect } from "react"
 
 import './index.css'
@@ -24,6 +25,7 @@ const App = () => {
 
   return (
     <>
+    <Toaster/>
       <SidebarProvider>
         {location.pathname !== "/login" && <AppSidebar/>}
         {location.pathname !== "/login" && <SidebarTrigger/>}
