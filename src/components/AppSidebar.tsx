@@ -1,0 +1,115 @@
+import { LayoutDashboard, Search, Settings, ChevronUp, User2, LogOut } from "lucide-react"
+import { useLocation } from "react-router-dom"
+
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarFooter
+} from "@/components/ui/sidebar"
+
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem
+} from "@/components/ui/dropdown-menu"
+
+// Menu items.
+const items = [
+  {
+    title: "Dashboard",
+    url: "/",
+    icon: LayoutDashboard,
+  },
+  {
+    title: "Search",
+    url: "#",
+    icon: Search,
+  },
+  {
+    title: "Settings",
+    url: "#",
+    icon: Settings,
+  },
+]
+
+const AppSidebar = () => {
+  const location = useLocation();
+
+  return (
+    <Sidebar>
+      <SidebarContent>
+        <SidebarGroup>
+          {/* Image above the label */}
+          <div className="flex justify-center py-4">
+            <img
+              src="/logo.png"
+              alt="Logo"
+              className="h-12 w-auto rounded-[35%]"
+            />
+          </div>
+          {/* <SidebarGroupLabel>FarmerLine Data Dashboard</SidebarGroupLabel> */}
+          <SidebarGroupContent>
+            <SidebarMenu>
+            {items.map((item) => {
+              const isActive = location.pathname === item.url; // returns true if the current route matches with the item url
+            
+              return (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton
+                    asChild
+                    className={isActive ? "bg-[#2666CF] text-white hover:bg-[#2666CF] hover:text-white":""}
+                  >
+                    <a href={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              );
+            })}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+
+      {/* Footer Section to display user and log out. */}
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton>
+                  <User2 /> 
+                  <div className="flex flex-col">
+                    Admin
+                    <span className="text-[11px] text-slate-500 truncate max-w-[120px]"
+                    >
+                      admin@farmerline.co
+                    </span>
+                  </div>
+                  <ChevronUp className="ml-auto" />
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent side="top" className="bg-red-700 text-white">
+                <DropdownMenuItem
+                  className="hover:bg-red-600 hover:text-white cursor-pointer flex items-center gap-2"
+                >
+                  <LogOut className="text-white"/>
+                  <span>Sign out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
+    </Sidebar>
+  )
+}
+
+export default AppSidebar;
