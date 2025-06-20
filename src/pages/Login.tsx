@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from '@/components/ui/label'
-import {credentials} from "@/mockData"
+import {credentials} from "../services/mockData"
 import { useNavigate } from 'react-router-dom'
 
 const Login : React.FC = () => {

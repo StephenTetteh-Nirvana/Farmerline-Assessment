@@ -6,7 +6,7 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
-  import { farmerData } from "@/mockData"
+  import { farmerData } from "../services/mockData"
   import { useEffect, useState } from "react"
   import FarmerProductsDisplay from "./FarmerProductsDisplay"
 
@@ -46,7 +46,6 @@ import {
           <TableHead>Contact Number</TableHead>
           <TableHead>Registration Date</TableHead>
           <TableHead>Products Purchased</TableHead>
-
         </TableRow>
       </TableHeader>
       <TableBody>
