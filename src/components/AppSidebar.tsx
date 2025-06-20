@@ -45,17 +45,15 @@ const AppSidebar = () => {
 
   const logOut = () => {
     localStorage.clear()
-    setTimeout(()=>{
-     navigate("/login")
-     toast("You logged out",{
-      duration: 2000,
-      position: "top-center",
-      action: {
-        label: "OK",
-        onClick: () => console.log("Logged out"),
-      },
-     });
-    },1000)
+    navigate("/login")
+    toast("You logged out",{
+     duration: 2000,
+     position: "top-center",
+     action: {
+       label: "OK",
+       onClick: () => console.log("Logged out"),
+     },
+    });
   }
 
   return (
