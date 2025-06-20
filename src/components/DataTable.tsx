@@ -6,10 +6,35 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
-  import { Eye } from "lucide-react"
   import { farmerData } from "@/mockData"
+  import { useEffect, useState } from "react"
+  import FarmerProductsDisplay from "./FarmerProductsDisplay"
 
   const DataTable: React.FC = () => {
+
+    const [id,setId] = useState("")
+    const [allFarmers, setAllFarmers] = useState<Farmer[]>([]);
+    
+    //stores farmer Data in localStorage on page load
+    useEffect(()=>{
+        const farmerArr = localStorage.getItem("FarmerData")
+        setAllFarmers(farmerArr !== null ? JSON.parse(farmerArr) : [])
+        
+        if(allFarmers.length === 0) {
+            localStorage.setItem("FarmerData",JSON.stringify(farmerData))
+          }
+      },[])
+      
+    // type of array data for allFarmers state.
+    type Farmer = {
+        farmerId: string;
+        name: string;
+        location: string;
+        contactNumber: string;
+        registrationDate: string;
+        productsPurchased: string[];
+    };
+
 
   return(
     <Table className="border border-slate-200 mt-3">
@@ -25,14 +50,18 @@ import {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {farmerData.map((farmer)=>(
+        {allFarmers.map((farmer)=>(
           <TableRow key={farmer.farmerId}>
             <TableCell className="font-medium">{farmer.farmerId}</TableCell>
             <TableCell>{farmer.name}</TableCell>
             <TableCell>{farmer.location}</TableCell>
             <TableCell>{farmer.contactNumber}</TableCell>
             <TableCell>{farmer.registrationDate}</TableCell>
-            <TableCell><Eye className="text-slate-400"/></TableCell>
+            <TableCell>
+                <button onClick={()=>setId(farmer.farmerId)}>
+                  <FarmerProductsDisplay farmerId={id}/>
+                </button>
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
