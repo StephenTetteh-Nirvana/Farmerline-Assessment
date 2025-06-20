@@ -40,4 +40,14 @@ const farmerData = [
     "productsPurchased": ["Tools"]
     }
 ]
+
+const credentials = {
+    email: "admin@farmerline.co",
+    password: "password123"
+}
+
+export {
+    farmerData,
+    credentials
+}
     
