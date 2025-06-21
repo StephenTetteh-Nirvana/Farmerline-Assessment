@@ -8,38 +8,57 @@
   } from "@/components/ui/table"
   import { useEffect, useState } from "react"
   import { Pencil, Trash2 } from "lucide-react"
+  import { toast } from "sonner"
   import FarmerProductsDisplay from "./FarmerProductsDisplay"
+  import EditFarmer from "./EditFarmer";
+  
+  type Farmer = {
+    farmerId: string;
+    firstName: string;
+    lastName: string;
+    region: string;
+    district: string,
+    name: string;
+    location: string;
+    contactNumber: string;
+    registrationDate: string;
+    productsPurchased: string[];
+  };
 
-  const DataTable: React.FC = () => {
-    // type of array data for allFarmers state.
-    type Farmer = {
-      farmerId: string;
-      firstName: string;
-      lastName: string;
-      region: string;
-      district: string,
-      name: string;
-      location: string;
-      contactNumber: string;
-      registrationDate: string;
-      productsPurchased: string[];
-    };
+  // type FormProps = {
+  //   formData: FormData,
+  //   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+  // }
+  
+
+  const DataTable = ({formData,setFormData}: FormProps) => {
+
     const [id,setId] = useState("")
     const [allFarmers, setAllFarmers] = useState<Farmer[]>([]);
     
-    //runs every second to get latest data and stores farmer Data in state on initial load
+    //runs get latest data from localStorage whenever formData changes.
     useEffect(()=>{
-      setInterval(()=>{
-        console.log("running every second")
-        const farmerArr = localStorage.getItem("FarmerData")
-        const parsed = farmerArr !== null ? JSON.parse(farmerArr) : []
-        setAllFarmers(parsed)
-      },1000)
-    },[])
+      const farmerArr = localStorage.getItem("FarmerData")
+      const parsed = farmerArr !== null ? JSON.parse(farmerArr) : []
+      setAllFarmers(parsed)
+    },[formData])
 
-      
-      
+    const deleteFarmerData = (id: string) => {
+      const filteredData = allFarmers.filter((f: Farmer) => f.farmerId !== id)
+      setAllFarmers(filteredData);
+      localStorage.setItem("FarmerData",JSON.stringify(filteredData))
+      toast("Farmer deleted successfully",{
+        duration: 2000,
+        position: "top-center",
+        action: {
+          label: "OK",
+          onClick: () => console.log("deleted"),
+        },
+      });
+    }
+
   return(
+    <>
     <Table className="border border-slate-200 mt-3">
       <TableHeader>
         <TableRow>
@@ -63,19 +82,21 @@
             <TableCell>{farmer.registrationDate}</TableCell>
             <TableCell>
               <div onClick={()=>setId(farmer.farmerId)}>
-                <FarmerProductsDisplay farmerId={id}/>
+                <FarmerProductsDisplay farmerId={farmer.farmerId}/>
               </div>
             </TableCell>
             <TableCell>
               <div className="flex gap-1.5">
-                <Pencil size={17} className="text-black cursor-pointer"/>  
-                <Trash2 size={17} className="text-red-600 cursor-pointer"/>
+                <Pencil size={17} className="text-black cursor-pointer"  onClick={()=>setId(farmer.farmerId)}/>  
+                <Trash2 size={17} className="text-red-600 cursor-pointer" onClick={()=>deleteFarmerData(farmer.farmerId)}/>
               </div>
             </TableCell>
           </TableRow>
         ))}
       </TableBody>
     </Table>
+    {id && <EditFarmer farmerID={id} formData={formData} setFormData={setFormData}/>}
+    </>
   )
 }
 

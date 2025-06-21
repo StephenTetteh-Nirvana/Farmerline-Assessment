@@ -21,19 +21,13 @@ import * as z from "zod/v4"
 import DatePicker from "./DatePicker"
 import ProductsDropdown from "./ProductsDropdown"
 
+type FormProps = {
+  formData: FormData,
+  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+}
 
-const AddFarmer = () => {
+const AddFarmer = ({formData,setFormData}: FormProps) => {
 
-  const [formData,setFormData] = useState<FormData>({
-    farmerId: "",
-    firstName:"",
-    lastName:"",
-    region:"",
-    district:"",
-    contactNumber:"",
-    registrationDate: "",
-    productsPurchased: []
-  })
   const [errors,setErrors] = useState<SchemaErrors>({})
   const [open,setOpen] = useState(false)
   

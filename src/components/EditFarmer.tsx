@@ -12,43 +12,37 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import { formSchema } from "@/schema/formSchema"
 import type {FormData,SchemaErrors } from "@/schema/formSchema"
+import { toast } from "sonner"
 import * as z from "zod/v4"
 import DatePicker from "./DatePicker"
 import ProductsDropdown from "./ProductsDropdown"
 
+type EditProps = {
+  farmerID: string,
+  formData: FormData,
+  setFormData: React.Dispatch<React.SetStateAction<FormData>>
+}
 
-const EditFarmer = () => {
-  const [formData,setFormData] = useState<FormData>({
-    farmerId: "",
-    firstName:"",
-    lastName:"",
-    region:"",
-    district:"",
-    contactNumber:"",
-    registrationDate: "",
-    productsPurchased: []
-  })
+const EditFarmer = ({farmerID,formData,setFormData}: EditProps) => {
 
+  const farmerArr = localStorage.getItem("FarmerData")
+  const parsedData = farmerArr !== null ? JSON.parse(farmerArr) : []
+  const foundFarmer = parsedData.find((f: FormData) => f.farmerId === farmerID)
+
+  console.log(foundFarmer)
+
+  const [open,setOpen] = useState(false)
   const [errors,setErrors] = useState<SchemaErrors>({})
-  
-  const localStoreFarmerData = localStorage.getItem("FarmerData")
-  const parsedData = localStoreFarmerData !== null ? JSON.parse(localStoreFarmerData) : [] 
-  const lastItem = parsedData.at(-1)
-  const lastItemID = lastItem.farmerId
-  
-  // this logic generates a new dummy id for our new product.
-  const generateID = (lastItemID: string) =>{
-    const extractNumericValue = lastItemID.slice(1)
-    const newNumericValue = Number(extractNumericValue) + 1;
-    const newID = `F00${String(newNumericValue)}`
-    return newID
-  }
 
-  const newID = generateID(lastItemID)
-
+  useEffect(() => {
+    if (farmerID) {
+      setOpen(true); // automatically open when a farmer ID is set
+    }
+  }, [farmerID]);
+  
 
   // function to update formData with values.
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,11 +81,25 @@ const EditFarmer = () => {
       setErrors(flattenedErrorArr.fieldErrors)
     }else{
       //Generate and insert new Id
-      const updatedFormData = {...formData, farmerId: newID}
+      const updatedFormData = {...formData}
       setFormData(updatedFormData);
       const newFarmerData = [...parsedData, updatedFormData]
       localStorage.setItem("FarmerData",JSON.stringify(newFarmerData))
       console.log("Data",formData)
+
+      //Toast message when farmer is added successfully
+      toast("Farmer Information Updated",{
+        duration: 2500,
+        position: "top-center",
+        action: {
+          label: "OK",
+          onClick: () => console.log("success"),
+        },
+      });
+      clearFields() // clear fields after adding new farmer
+      setTimeout(() => {
+        setOpen(false);
+      }, 500);
     }
   }
 
@@ -112,22 +120,15 @@ const EditFarmer = () => {
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-      <Button className='bg-[#2666CF] rounded-sm flex items-center gap-2
-        text-white hover:bg-[#2666CF] hover:text-white hover:cursor-pointer
-        '
-       >
-        <Plus/>
-        Add Farmer
-      </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={(e)=>handleSubmit(e)}>
           <DialogHeader>
-            <DialogTitle>Add New Farmer</DialogTitle>
+            <DialogTitle>Edit Farmer Information</DialogTitle>
             <DialogDescription>
-              Enter farmer information here. Click save when you&apos;re done.
+              Edit farmer information here. Click save when you&apos;re done.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 mt-3">
@@ -138,7 +139,7 @@ const EditFarmer = () => {
                 <Input 
                   id="firstName" 
                   name="firstName" 
-                  placeholder="Stephen" value={formData.firstName} 
+                  placeholder="Stephen" value={foundFarmer?.firstName} 
                   onChange={(e)=>handleChange(e)}
                   className={errors.firstName ? "border border-red-600" : ""}
                   />
@@ -149,7 +150,7 @@ const EditFarmer = () => {
                 <Input 
                   id="lastName" 
                   name="lastName" 
-                  placeholder="Tetteh" value={formData.lastName} 
+                  placeholder="Tetteh" value={formData?.lastName} 
                   onChange={(e)=>handleChange(e)}
                   className={errors.lastName ? "border border-red-600" : ""}
                   />
@@ -163,7 +164,7 @@ const EditFarmer = () => {
                 <Input 
                   id="region" 
                   name="region" 
-                  placeholder="Central" value={formData.region} 
+                  placeholder="Central" value={formData?.region} 
                   onChange={(e)=>handleChange(e)}
                   className={errors.region ? "border border-red-600" : ""}
                   />
@@ -174,7 +175,7 @@ const EditFarmer = () => {
                 <Input 
                   id="district" 
                   name="district" 
-                  placeholder="Accra" value={formData.district} 
+                  placeholder="Accra" value={formData?.district} 
                   onChange={(e)=>handleChange(e)}
                   className={errors.district ? "border border-red-600" : ""}
                   />
