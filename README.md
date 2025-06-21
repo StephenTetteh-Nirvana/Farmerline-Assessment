@@ -8,10 +8,12 @@ A simplified dashboard built with React that displays key farmer information.
 - Email: admin@farmerline.co
 - Password: password123
 
-## Changes made to MOCK DATA.
-   The reason for this change is because the initial mock Data structure was making easy work complicated anD time wasting:
+## Changes made to Mock Data.
+   The reason for this change is because the initial mock Data structure was making easy work complicated and time wasting:
 
-   OLD MOCK DATA                                                                   
+  ### Old Mock Data   
+
+   ```json                                                             
    {
    "farmerId": "F005",
    "name": "Grace Amoah", 
@@ -20,8 +22,10 @@ A simplified dashboard built with React that displays key farmer information.
    "registrationDate": "2023-05-12",
    "productsPurchased": ["Tools"]
    },
+   ```
 
-   NEW MOCK DATA
+  ### New Mock Data
+   ```json
    {
    "farmerId": "F005",
    "firstName": "Grace", 
@@ -32,6 +36,7 @@ A simplified dashboard built with React that displays key farmer information.
    "registrationDate": "2023-05-12",
    "productsPurchased": ["Tools"]
    }
+   ```
 
 
 ## Project Structure
