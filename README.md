@@ -2,6 +2,11 @@
 
 A simplified dashboard built with React that displays key farmer information.
 
+## Login Credentials
+
+- Email: admin@farmerline.co
+- Password: password123
+
 ## Project Structure
 .
 ├── src/                            # Main source code directory
