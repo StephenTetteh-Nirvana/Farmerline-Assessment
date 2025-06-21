@@ -34,14 +34,40 @@ A simplified dashboard built with React that displays key farmer information.
    }
 
 
-
 ## Project Structure
 
-### `src/` - Main Source Folder
+### `src/` — Main Source Folder
 
-- **`components/`**
-  Reusable React components
-  - `ui/`: UI primitives powered by Shadcn(e.g, Buttons,Cards etc)
+- **`components/`**  
+  Reusable React components.  
+  - `ui/`: UI primitives powered by Shadcn (e.g., Button, Dialog, Input).  
+  - `utils/`: Utility components like route guards (e.g., ProtectedRoute).
+
+- **`hooks/`**  
+  Custom React hooks, e.g., for responsive behavior or shared logic.
+
+- **`lib/`**  
+  Utility/helper functions — e.g., Tailwind class merging or common formatters.
+
+- **`services/`**  
+  Contains mock data or service logic (e.g., static API-like files).
+
+- **`schema/`**  
+  Zod schemas used for form validation and type enforcement.
+
+- **`pages/`**  
+  Route-based components. Each file or folder here maps to a page route.
+
+### Other Key Files
+
+- **`App.tsx`** — Root component that sets up routes and layout.
+- **`main.tsx`** — React app entry point. Renders the `App` component and mounts to DOM.
+- **`index.css`** — Global styles and Tailwind/Shadcn setup.
+- **`index.html`** — HTML template used by Vite.
+- **`vite-env.d.ts`** — Type definitions required for Vite.
+- **`tsconfig*.json`** — TypeScript configuration files for the app and tooling.
+- **`package.json`** — Lists project dependencies and scripts.
+
   
 
 
