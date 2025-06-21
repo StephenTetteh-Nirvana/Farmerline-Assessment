@@ -3,6 +3,7 @@ import { farmerData } from '@/services/mockData'
 import type { FormData } from '@/schema/formSchema'
 import AddFarmer from '@/components/AddFarmer'
 import DataTable from '@/components/DataTable'
+import TotalFarmers from '@/components/TotalFarmers'
 
 const Home = () => {
 
@@ -31,8 +32,13 @@ const Home = () => {
 
   return (
     <div>
-      <AddFarmer formData={formData} setFormData={setFormData}/>
-      <DataTable formData={formData} setFormData={setFormData}/>
+      <div className='flex gap-3'>
+        <TotalFarmers/>
+      </div>
+      <div className='mt-5'>
+        <AddFarmer formData={formData} setFormData={setFormData}/>
+        <DataTable formData={formData} setFormData={setFormData}/>
+      </div>
     </div>
   )
 }
