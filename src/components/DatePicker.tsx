@@ -9,10 +9,18 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-const DatePicker = () => {
+import type { FormData } from "./AddFarmer"
+
+type ErrorProps = {
+  errors: string
+  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+}
+
+const DatePicker = ({errors,setFormData}: ErrorProps) => {
+
   const [open, setOpen] = useState(false)
   const [date, setDate] = useState<Date | undefined>(undefined);
-
+  
   return (
     <div className="flex flex-col gap-3">
       <Popover open={open} onOpenChange={setOpen}>
@@ -31,9 +39,14 @@ const DatePicker = () => {
             mode="single"
             selected={date}
             captionLayout="dropdown"
-            onSelect={(date) => {
-              setDate(date)
-              setOpen(false)
+            onSelect={(selectedDate) => {
+              if (!selectedDate) return;
+              setDate(selectedDate);
+              setOpen(false);
+              setFormData((prev) => ({
+                ...prev,
+                registrationDate: selectedDate.toISOString(),
+              }));
             }}
           />
         </PopoverContent>

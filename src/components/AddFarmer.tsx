@@ -16,23 +16,26 @@ import { useState } from "react"
 import * as z from "zod/v4"
 import DatePicker from "./DatePicker"
 
+//Defining schema
+export const formSchema = z.object({
+  name: z.string().min(5, "Name should be at least 5 characters"),
+  location: z.string().min(2, "Location should be more than two characters"),
+  contactNumber: z.string().min(10, "Number should be at least 10 characters"),
+  registrationDate: z.string().min(2, "Please select a date")
+})
+
+export type FormData = z.infer<typeof formSchema>
+type SchemaErrors = Partial<Record<keyof FormData,string[]>> //setting errors state wth types that match incoming ZodErrors
 
 const AddFarmer: React.FC = () => {
   
-  //Defining schema
-  const formSchema = z.object({
-    name: z.string().min(5, "Name should be at least 5 characters"),
-    location: z.string().min(2, "Location should be more than two characters"),
-    contactNumber: z.string().min(10, "Number should be at least 10 characters")
-  })
-
-  
-  const [formData,setFormData] = useState({
+  const [formData,setFormData] = useState<FormData>({
     name:"",
     location:"",
     contactNumber:"",
-    registrationDate:""
+    registrationDate: ""
   })
+  const [errors,setErrors] = useState<SchemaErrors>({})
 
   // function to update formData with values.
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,14 +68,23 @@ const AddFarmer: React.FC = () => {
     e.preventDefault()
     
     const result = formSchema.safeParse(formData)
-    console.log("result:",result)
 
     if(!result.success){
-      const flattenedErrorArr = z.flattenError(result.error) 
-      console.log("error",flattenedErrorArr)
+      const flattenedErrorArr = z.flattenError(result.error)
+      setErrors(flattenedErrorArr.fieldErrors)
     }
+  }
 
-    console.log("this working")
+  //clear form fields
+  const clearFields = () =>{
+    setFormData({
+      name: "",
+      location: "",
+      contactNumber: "",
+      registrationDate: "",
+    })
+
+    setErrors({})
   }
 
   return (
@@ -95,26 +107,49 @@ const AddFarmer: React.FC = () => {
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 mt-3">
-            <div className="grid gap-3">
+            <div className="grid gap-1.5">
               <Label htmlFor="name">Name</Label>
-              <Input id="name-1" name="name" placeholder="Pedro Duarte" value={formData.name} onChange={handleChange}/>
+              <Input 
+                id="name-1" 
+                name="name" 
+                placeholder="Pedro Duarte" value={formData.name} 
+                onChange={(e)=>handleChange(e)}
+                className={errors.name ? "border border-red-600" : ""}
+              />
+              <span className="text-[12px] text-red-600">{errors && errors.name}</span>
             </div>
-            <div className="grid gap-3">
+            <div className="grid gap-1.5">
               <Label htmlFor="location">Location</Label>
-              <Input id="location" name="location" placeholder="East Legon,Accra" onChange={handleChange} />
+              <Input 
+                id="location" 
+                name="location" 
+                placeholder="East Legon,Accra" 
+                onChange={(e)=>handleChange(e)}
+                className={errors.location ? "border border-red-600" : ""} 
+              />
+              <span className="text-[12px] text-red-600">{errors && errors.location}</span>
             </div>
-            <div className="grid gap-3">
+            <div className="grid gap-1.5">
               <Label htmlFor="contactNumber">Contact Number</Label>
-              <Input id="contactNumber" type="number" name="contactNumber" placeholder="+233256983879" onChange={handleChange} />
+              <Input 
+                id="contactNumber" 
+                type="number" 
+                name="contactNumber" 
+                placeholder="+233256983879" 
+                onChange={(e)=>handleChange(e)}
+                className={errors.contactNumber ? "border border-red-600" : ""} 
+              />
+              <span className="text-[12px] text-red-600">{errors && errors.contactNumber}</span>
             </div>
             <div className="grid gap-3">
               <Label htmlFor="registrationDate">Registration Date</Label>
-              <DatePicker/>
+              <DatePicker errors={"Please select a date"} setFormData={setFormData}/>
+              <span className="text-[12px] text-red-600">{errors && errors.registrationDate}</span>
             </div>
           </div>
           <DialogFooter className="mt-4">
             <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline" onClick={()=>clearFields()}>Cancel</Button>
             </DialogClose>
             <Button type="submit">Save changes</Button>
           </DialogFooter>
