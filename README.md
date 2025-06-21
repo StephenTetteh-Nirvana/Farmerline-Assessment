@@ -36,31 +36,13 @@ A simplified dashboard built with React that displays key farmer information.
 
 
 ## Project Structure
-.
-├── src/                            # Main source code directory
-│   ├── components/                 # Reusable React components
-│   │   ├── ui/                     # Shadcn UI components (buttons, cards, etc.)
-│   │   └── utils/                  # e.g., ProtectedRoute for admin access
-│
-│   ├── hooks/                      # Custom hooks (e.g., Shadcn mobile responsive config)
-│   ├── lib/                        # Utility functions (e.g., Tailwind class merging helpers)
-│   ├── services/                   # Mock data
-│   ├── pages/                      # Route-based components (each file = a route)
-│   ├── schema/                     # Contains schema for form submission
 
-│
-│   ├── App.tsx                     # Main application layout & logic
-│   ├── main.tsx                    # App entry point (renders App, includes router setup)
-│   ├── index.css                   # Global styles and Tailwind/Shadcn config
-│   ├── vite-env.d.ts               # Vite-specific type definitions
-│   ├── index.html                  # Root HTML file used by Vite to mount the React app
+### `src/` - Main Source Folder
 
-│
-├── package.json                   # Project metadata, dependencies, and scripts
-├── package-lock.json              # Exact dependency versions
-├── tsconfig.json                  # Global TypeScript configuration
-├── tsconfig.app.json              # TypeScript config specific to the app
-├── tsconfig.node.json             # TypeScript config for Node-related scripts
+- **`components/`**
+  Reusable React components
+  - `ui/`: UI primitives powered by Shadcn(e.g, Buttons,Cards etc)
+  
 
 
 ## Tech Stack
