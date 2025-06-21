@@ -8,13 +8,28 @@
   } from "@/components/ui/table"
   import { farmerData } from "../services/mockData"
   import { useEffect, useState } from "react"
-  import FarmerProductsDisplay from "./FarmerProductsDisplay"
   import { Pencil, Trash2 } from "lucide-react"
+  import FarmerProductsDisplay from "./FarmerProductsDisplay"
 
   const DataTable: React.FC = () => {
     const [id,setId] = useState("")
     const [allFarmers, setAllFarmers] = useState<Farmer[]>([]);
     
+    // type of array data for allFarmers state.
+    type Farmer = {
+      farmerId: string;
+      firstName: string;
+      lastName: string;
+      region: string;
+      district: string,
+      name: string;
+      location: string;
+      contactNumber: string;
+      registrationDate: string;
+      productsPurchased: string[];
+    };
+
+
     //stores farmer Data in localStorage on page load
     useEffect(()=>{
       const farmerArr = localStorage.getItem("FarmerData")
@@ -26,15 +41,6 @@
       }
     },[])
       
-    // type of array data for allFarmers state.
-    type Farmer = {
-      farmerId: string;
-      name: string;
-      location: string;
-      contactNumber: string;
-      registrationDate: string;
-      productsPurchased: string[];
-    };
 
 
   return(
@@ -55,8 +61,8 @@
         {allFarmers.map((farmer)=>(
           <TableRow key={farmer.farmerId}>
             <TableCell className="font-medium">{farmer.farmerId}</TableCell>
-            <TableCell>{farmer.name}</TableCell>
-            <TableCell>{farmer.location}</TableCell>
+            <TableCell>{farmer.name ? farmer.name : farmer.firstName + ' ' + farmer.lastName}</TableCell>
+            <TableCell>{farmer.location ? farmer.location : farmer.region + ', ' + farmer.district }</TableCell>
             <TableCell>{farmer.contactNumber}</TableCell>
             <TableCell>{farmer.registrationDate}</TableCell>
             <TableCell>

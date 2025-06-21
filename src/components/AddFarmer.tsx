@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { formSchema } from "@/schema/formSchema"
 import type {FormData,SchemaErrors } from "@/schema/formSchema"
 import * as z from "zod/v4"
@@ -39,6 +39,7 @@ const AddFarmer = () => {
   const lastItem = parsedData.at(-1)
   const lastItemID = lastItem.farmerId
   
+  // this logic generates a new dummy id for our new product.
   const generateID = (lastItemID: string) =>{
     const extractNumericValue = lastItemID.slice(1)
     const newNumericValue = Number(extractNumericValue) + 1;
@@ -210,8 +211,8 @@ const AddFarmer = () => {
             <div>
               <ul>
                 <p className="text-[13px] font-medium">You have selected {formData.productsPurchased.length} product(s).</p>
-                {formData.productsPurchased.map((data)=>(
-                  <li key={data.id} className="text-[12px]">{data ? data : ""}</li>
+                {formData.productsPurchased.map((data,index)=>(
+                  <li key={index} className="text-[12px]">{data ? data : ""}</li>
                 ))}
               </ul>
             </div>

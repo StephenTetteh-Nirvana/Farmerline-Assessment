@@ -16,6 +16,10 @@ type ProductDisplayProps = {
 
 type Farmer = {
   farmerId: string;
+  firstName: string;
+  lastName: string;
+  region: string;
+  district: string,
   name: string;
   location: string;
   contactNumber: string;
@@ -28,6 +32,9 @@ const FarmerProductsDisplay = ({ farmerId }: ProductDisplayProps) => {
   const farmerData = farmerArr !== null ? JSON.parse(farmerArr) : []
   
   const foundFarmer = farmerData.find((f: Farmer) => f.farmerId === farmerId) //finds the clicked farmer based on a condition.
+  const farmerNameFormat = foundFarmer?.name ? foundFarmer?.name : foundFarmer?.firstName + ' ' + foundFarmer?.lastName 
+  // const farmerNameFormat = foundFarmer.name ? foundFarmer.name : foundFarmer.firstName + ' ' + foundFarmer.lastName 
+
 
   return (
     <Dialog>
@@ -38,13 +45,17 @@ const FarmerProductsDisplay = ({ farmerId }: ProductDisplayProps) => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>{foundFarmer && foundFarmer.name}&apos;s Purchased Products</DialogTitle>
+          <DialogTitle>{farmerNameFormat}&apos;s Purchased Products</DialogTitle>
           <DialogDescription>
-          {foundFarmer && foundFarmer.productsPurchased.map((product: string, index: number) => (
-            <li key={index} className="text-slate-700">
-              {product}
-            </li>
-          ))}
+          {foundFarmer?.productsPurchased?.length > 0 ? (
+            foundFarmer.productsPurchased.map((product: string, index: number) => (
+              <li key={index} className="text-slate-700">
+                {product}
+              </li>
+            ))
+          ) : (
+            <span>No products yet.</span>
+          )}
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
