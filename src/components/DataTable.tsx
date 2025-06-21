@@ -8,20 +8,20 @@
   } from "@/components/ui/table"
   import { farmerData } from "../services/mockData"
   import { useEffect, useState } from "react"
-  import { Button } from "@/components/ui/button"
   import FarmerProductsDisplay from "./FarmerProductsDisplay"
+  import { Pencil, Trash2 } from "lucide-react"
 
   const DataTable: React.FC = () => {
-
     const [id,setId] = useState("")
     const [allFarmers, setAllFarmers] = useState<Farmer[]>([]);
     
     //stores farmer Data in localStorage on page load
     useEffect(()=>{
       const farmerArr = localStorage.getItem("FarmerData")
-      setAllFarmers(farmerArr !== null ? JSON.parse(farmerArr) : [])
+      const parsed = farmerArr !== null ? JSON.parse(farmerArr) : []
+      setAllFarmers(parsed)
       
-      if(allFarmers.length === 0) {
+      if(parsed.length === 0) {
         localStorage.setItem("FarmerData",JSON.stringify(farmerData))
       }
     },[])
@@ -47,6 +47,8 @@
           <TableHead>Contact Number</TableHead>
           <TableHead>Registration Date</TableHead>
           <TableHead>Products Purchased</TableHead>
+          <TableHead>Actions</TableHead>
+
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -58,10 +60,15 @@
             <TableCell>{farmer.contactNumber}</TableCell>
             <TableCell>{farmer.registrationDate}</TableCell>
             <TableCell>
-            {/* / Replace this later(causing the button nested in another button error) */}
-              <Button onClick={()=>setId(farmer.farmerId)}>
+              <div onClick={()=>setId(farmer.farmerId)}>
                 <FarmerProductsDisplay farmerId={id}/>
-              </Button>
+              </div>
+            </TableCell>
+            <TableCell>
+              <div className="flex gap-1.5">
+                <Pencil size={17} className="text-black cursor-pointer"/>  
+                <Trash2 size={17} className="text-red-600 cursor-pointer"/>
+              </div>
             </TableCell>
           </TableRow>
         ))}

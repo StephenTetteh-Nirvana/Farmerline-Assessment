@@ -11,11 +11,11 @@ import {
 
 import type { FormData } from "@/schema/formSchema"
 
-type ErrorProps = {
+type FormProps = {
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
 }
 
-const DatePicker = ({setFormData}: ErrorProps) => {
+const DatePicker = ({setFormData}: FormProps) => {
 
   const [open, setOpen] = useState(false)
   const [date, setDate] = useState<Date | undefined>(undefined);
@@ -44,7 +44,7 @@ const DatePicker = ({setFormData}: ErrorProps) => {
               setOpen(false);
               setFormData((prev) => ({
                 ...prev,
-                registrationDate: selectedDate.toISOString(),
+                registrationDate: selectedDate.toISOString().split("T")[0],
               }));
             }}
           />

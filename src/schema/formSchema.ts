@@ -2,18 +2,14 @@ import * as z from "zod/v4"
 
 //Defining schema
 export const formSchema = z.object({
-  name: z.string().min(5, "Name should be at least 5 characters"),
-  location: z.string().min(2)
-  .refine((val) => val.includes(","), {
-    message: "Please separate region and district with a comma (e.g. Ashanti, Kumasi)",
-  })
-  .transform((val) => {
-    const parts = val.split(",").map((part) => part.trim());
-    const [region, district] = parts;
-    return `${district}, ${region}`;
-  }),
+  farmerId: z.string().max(4),
+  firstName: z.string().min(2, "Please enter your first name"),
+  lastName: z.string().min(2, "Please enter your last name."),
+  region: z.string().min(5, "Please enter your region (eg.Central)" ),
+  district: z.string().min(5, "Please enter your district (eg.Accra)"),
   contactNumber: z.string().min(10, "Number should be at least 10 characters"),
-  registrationDate: z.string()
+  registrationDate: z.string(),
+  productsPurchased: z.array(z.string())
 })
 
 export type FormData = z.infer<typeof formSchema>
