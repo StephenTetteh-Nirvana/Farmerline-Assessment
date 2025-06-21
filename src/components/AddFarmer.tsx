@@ -13,21 +13,13 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
+import { formSchema } from "@/schema/formSchema"
+import type { FormData,SchemaErrors } from "@/schema/formSchema"
 import * as z from "zod/v4"
 import DatePicker from "./DatePicker"
 
-//Defining schema
-export const formSchema = z.object({
-  name: z.string().min(5, "Name should be at least 5 characters"),
-  location: z.string().min(2, "Location should be more than two characters"),
-  contactNumber: z.string().min(10, "Number should be at least 10 characters"),
-  registrationDate: z.string().min(2, "Please select a date")
-})
 
-export type FormData = z.infer<typeof formSchema>
-type SchemaErrors = Partial<Record<keyof FormData,string[]>> //setting errors state wth types that match incoming ZodErrors
-
-const AddFarmer: React.FC = () => {
+const AddFarmer = () => {
   
   const [formData,setFormData] = useState<FormData>({
     name:"",
@@ -73,6 +65,10 @@ const AddFarmer: React.FC = () => {
       const flattenedErrorArr = z.flattenError(result.error)
       setErrors(flattenedErrorArr.fieldErrors)
     }
+
+    console.log("errors:",errors)
+
+    console.log("Data:",formData)
   }
 
   //clear form fields
@@ -123,7 +119,7 @@ const AddFarmer: React.FC = () => {
               <Input 
                 id="location" 
                 name="location" 
-                placeholder="East Legon,Accra" 
+                placeholder="Central, Cape Coast" 
                 onChange={(e)=>handleChange(e)}
                 className={errors.location ? "border border-red-600" : ""} 
               />
@@ -143,8 +139,8 @@ const AddFarmer: React.FC = () => {
             </div>
             <div className="grid gap-3">
               <Label htmlFor="registrationDate">Registration Date</Label>
-              <DatePicker errors={"Please select a date"} setFormData={setFormData}/>
-              <span className="text-[12px] text-red-600">{errors && errors.registrationDate}</span>
+              <DatePicker setFormData={setFormData}/>
+              <span className="text-[12px] text-red-600">{!formData.registrationDate && "Please select a date"}</span>
             </div>
           </div>
           <DialogFooter className="mt-4">
@@ -160,3 +156,4 @@ const AddFarmer: React.FC = () => {
 }
 
 export default AddFarmer;
+

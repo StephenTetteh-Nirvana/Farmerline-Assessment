@@ -19,6 +19,8 @@ A simplified dashboard built with React that displays key farmer information.
 │   ├── lib/                        # Utility functions (e.g., Tailwind class merging helpers)
 │   ├── services/                   # Mock data
 │   ├── pages/                      # Route-based components (each file = a route)
+│   ├── schema/                     # Contains schema for form submission
+
 │
 │   ├── App.tsx                     # Main application layout & logic
 │   ├── main.tsx                    # App entry point (renders App, includes router setup)

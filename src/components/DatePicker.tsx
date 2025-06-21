@@ -9,14 +9,13 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-import type { FormData } from "./AddFarmer"
+import type { FormData } from "@/schema/formSchema"
 
 type ErrorProps = {
-  errors: string
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
 }
 
-const DatePicker = ({errors,setFormData}: ErrorProps) => {
+const DatePicker = ({setFormData}: ErrorProps) => {
 
   const [open, setOpen] = useState(false)
   const [date, setDate] = useState<Date | undefined>(undefined);
