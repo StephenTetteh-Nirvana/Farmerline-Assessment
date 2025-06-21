@@ -13,9 +13,10 @@ import type { FormData } from "@/schema/formSchema"
 
 type FormProps = {
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+  foundFarmer: FormData | undefined
 }
 
-const DatePicker = ({setFormData}: FormProps) => {
+const DatePicker = ({setFormData,foundFarmer}: FormProps) => {
 
   const [open, setOpen] = useState(false)
   const [date, setDate] = useState<Date | undefined>(undefined);
@@ -29,7 +30,7 @@ const DatePicker = ({setFormData}: FormProps) => {
             id="date"
             className="justify-between font-normal w-full"
           >
-            {date ? date.toLocaleDateString() : "Select date"}
+            {foundFarmer ? foundFarmer.registrationDate : date ? date.toLocaleDateString() : "Select date"}
             <ChevronDownIcon />
           </Button>
         </PopoverTrigger>

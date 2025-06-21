@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { toast } from 'sonner'
 import {
@@ -14,7 +14,7 @@ import { Label } from '@/components/ui/label'
 import {credentials} from "../services/mockData"
 import { useNavigate } from 'react-router-dom'
 
-const Login : React.FC = () => {
+const Login = () => {
   // const userData = localStorage.getItem("User")
   // const user = userData !== null ? JSON.parse(userData) : []
 

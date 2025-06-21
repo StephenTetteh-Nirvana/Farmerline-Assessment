@@ -9,6 +9,7 @@
   import { useEffect, useState } from "react"
   import { Pencil, Trash2 } from "lucide-react"
   import { toast } from "sonner"
+  import type { FormData } from "@/schema/formSchema"
   import FarmerProductsDisplay from "./FarmerProductsDisplay"
   import EditFarmer from "./EditFarmer";
   
@@ -18,20 +19,23 @@
     lastName: string;
     region: string;
     district: string,
-    name: string;
-    location: string;
     contactNumber: string;
     registrationDate: string;
     productsPurchased: string[];
   };
 
-  // type FormProps = {
-  //   formData: FormData,
-  //   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
-  // }
-  
+  const DataTable = () => {
 
-  const DataTable = ({formData,setFormData}: FormProps) => {
+    const [formData,setFormData] = useState<FormData>({
+      farmerId: "",
+      firstName:"",
+      lastName:"",
+      region:"",
+      district:"",
+      contactNumber:"",
+      registrationDate: "",
+      productsPurchased: []
+    })
 
     const [id,setId] = useState("")
     const [allFarmers, setAllFarmers] = useState<Farmer[]>([]);
@@ -76,8 +80,8 @@
         {allFarmers.map((farmer)=>(
           <TableRow key={farmer.farmerId}>
             <TableCell className="font-medium">{farmer.farmerId}</TableCell>
-            <TableCell>{farmer.name ? farmer.name : farmer.firstName + ' ' + farmer.lastName}</TableCell>
-            <TableCell>{farmer.location ? farmer.location : farmer.region + ', ' + farmer.district }</TableCell>
+            <TableCell>{farmer.firstName + ' ' + farmer.lastName}</TableCell>
+            <TableCell>{farmer.region + ', ' + farmer.district }</TableCell>
             <TableCell>{farmer.contactNumber}</TableCell>
             <TableCell>{farmer.registrationDate}</TableCell>
             <TableCell>

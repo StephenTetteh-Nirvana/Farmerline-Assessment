@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button"
-import { Plus } from "lucide-react"
 import {
   Dialog,
   DialogClose,
@@ -27,18 +26,17 @@ type EditProps = {
 }
 
 const EditFarmer = ({farmerID,formData,setFormData}: EditProps) => {
-
+    
   const farmerArr = localStorage.getItem("FarmerData")
   const parsedData = farmerArr !== null ? JSON.parse(farmerArr) : []
   const foundFarmer = parsedData.find((f: FormData) => f.farmerId === farmerID)
-
-  console.log(foundFarmer)
 
   const [open,setOpen] = useState(false)
   const [errors,setErrors] = useState<SchemaErrors>({})
 
   useEffect(() => {
     if (farmerID) {
+      setFormData(foundFarmer)
       setOpen(true); // automatically open when a farmer ID is set
     }
   }, [farmerID]);
@@ -46,28 +44,11 @@ const EditFarmer = ({farmerID,formData,setFormData}: EditProps) => {
 
   // function to update formData with values.
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name , value } = e.target
-    
-    if (name === "contactNumber"){ // compares name with contactNumber before execution
-      let convertedValue = value;
-
-      if(!value.startsWith("+233")){
-        convertedValue = value.replace(/^0+|^\+?/, ""); // removes any leading 0 or +
-        convertedValue = `+233${convertedValue}` // update the convertedValue with "+233" at the start
-      }
-
-      // return all other states and updates the contact number only
-      setFormData((prev) => ({
-        ...prev,  
-        contactNumber: convertedValue
-      }))
-
-    }else{
-      setFormData((prev) => ({
-        ...prev,  
-        [name]: value
-      }))
-    }
+    const { name , value } = e.target;
+    setFormData((prev) => ({
+      ...prev,  
+      [name]: value
+    }))
   }
 
   //function to submit the form
@@ -80,14 +61,21 @@ const EditFarmer = ({farmerID,formData,setFormData}: EditProps) => {
       const flattenedErrorArr = z.flattenError(result.error)
       setErrors(flattenedErrorArr.fieldErrors)
     }else{
-      //Generate and insert new Id
-      const updatedFormData = {...formData}
+      const updatedFormData = parsedData.map((farmer: FormData) => {
+        if (farmer.farmerId === formData.farmerId) {
+          return {
+            ...formData
+          };
+        } else {
+          return farmer;
+        }
+      });
+          
+      console.log("update:",updatedFormData)
       setFormData(updatedFormData);
-      const newFarmerData = [...parsedData, updatedFormData]
-      localStorage.setItem("FarmerData",JSON.stringify(newFarmerData))
-      console.log("Data",formData)
+      localStorage.setItem("FarmerData",JSON.stringify(updatedFormData))
 
-      //Toast message when farmer is added successfully
+    //   Toast message when farmer is added successfully
       toast("Farmer Information Updated",{
         duration: 2500,
         position: "top-center",
@@ -96,7 +84,7 @@ const EditFarmer = ({farmerID,formData,setFormData}: EditProps) => {
           onClick: () => console.log("success"),
         },
       });
-      clearFields() // clear fields after adding new farmer
+      clearFields() // clear fields
       setTimeout(() => {
         setOpen(false);
       }, 500);
@@ -139,7 +127,8 @@ const EditFarmer = ({farmerID,formData,setFormData}: EditProps) => {
                 <Input 
                   id="firstName" 
                   name="firstName" 
-                  placeholder="Stephen" value={foundFarmer?.firstName} 
+                  placeholder="Stephen" 
+                  value={formData.firstName} 
                   onChange={(e)=>handleChange(e)}
                   className={errors.firstName ? "border border-red-600" : ""}
                   />
@@ -150,7 +139,8 @@ const EditFarmer = ({farmerID,formData,setFormData}: EditProps) => {
                 <Input 
                   id="lastName" 
                   name="lastName" 
-                  placeholder="Tetteh" value={formData?.lastName} 
+                  placeholder="Tetteh" 
+                  value={formData.lastName} 
                   onChange={(e)=>handleChange(e)}
                   className={errors.lastName ? "border border-red-600" : ""}
                   />
@@ -164,7 +154,8 @@ const EditFarmer = ({farmerID,formData,setFormData}: EditProps) => {
                 <Input 
                   id="region" 
                   name="region" 
-                  placeholder="Central" value={formData?.region} 
+                  placeholder="Central" 
+                  value={formData.region} 
                   onChange={(e)=>handleChange(e)}
                   className={errors.region ? "border border-red-600" : ""}
                   />
@@ -175,7 +166,8 @@ const EditFarmer = ({farmerID,formData,setFormData}: EditProps) => {
                 <Input 
                   id="district" 
                   name="district" 
-                  placeholder="Accra" value={formData?.district} 
+                  placeholder="Accra" 
+                  value={formData.district} 
                   onChange={(e)=>handleChange(e)}
                   className={errors.district ? "border border-red-600" : ""}
                   />
@@ -190,7 +182,8 @@ const EditFarmer = ({farmerID,formData,setFormData}: EditProps) => {
                   id="contactNumber" 
                   type="number" 
                   name="contactNumber" 
-                  placeholder="+233256983879" 
+                  placeholder="0256983879" 
+                  value={formData.contactNumber}
                   onChange={(e)=>handleChange(e)}
                   className={errors.contactNumber ? "border border-red-600" : ""} 
                 />
@@ -198,7 +191,7 @@ const EditFarmer = ({farmerID,formData,setFormData}: EditProps) => {
               </div>
               <div className="grid gap-3">
                 <Label htmlFor="registrationDate">Registration Date</Label>
-                <DatePicker setFormData={setFormData}/>
+                <DatePicker setFormData={setFormData} foundFarmer={foundFarmer}/>
                 <span className="text-[12px] text-red-600">{!formData.registrationDate && "Please select a date"}</span>
               </div>
             </section>
@@ -211,8 +204,8 @@ const EditFarmer = ({farmerID,formData,setFormData}: EditProps) => {
 
             <div>
               <ul>
-                <p className="text-[13px] font-medium">You have selected {formData.productsPurchased.length} product(s).</p>
-                {formData.productsPurchased.map((data,index)=>(
+                <p className="text-[13px] font-medium">You have selected {foundFarmer.productsPurchased.length} product(s).</p>
+                {foundFarmer?.productsPurchased.map((data: string,index: number)=>(
                   <li key={index} className="text-[12px]">{data ? data : ""}</li>
                 ))}
               </ul>

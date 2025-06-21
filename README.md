@@ -8,6 +8,33 @@ A simplified dashboard built with React that displays key farmer information.
 - Email: admin@farmerline.co
 - Password: password123
 
+## Changes made to MOCK DATA.
+   The reason for this change is because the initial mock Data structure was making easy work complicated anD time wasting:
+
+   OLD MOCK DATA                                                                   
+   {
+   "farmerId": "F005",
+   "name": "Grace Amoah", 
+   "location": "Eastern, Koforidua", 
+   "contactNumber": "+233277889900",
+   "registrationDate": "2023-05-12",
+   "productsPurchased": ["Tools"]
+   },
+
+   NEW MOCK DATA
+   {
+   "farmerId": "F005",
+   "firstName": "Grace", 
+   "lastName": "Amoah",
+   "region": "Eastern", 
+   "district": "Koforidua",
+   "contactNumber": "0277889900",
+   "registrationDate": "2023-05-12",
+   "productsPurchased": ["Tools"]
+   }
+
+
+
 ## Project Structure
 .
 ├── src/                            # Main source code directory

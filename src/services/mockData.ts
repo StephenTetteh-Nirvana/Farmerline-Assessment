@@ -1,41 +1,51 @@
 const farmerData = [
     {
     "farmerId": "F001",
-    "name": "Alice Mensah",
-    "location": "Greater Accra, Kpone Katamanso",
-    "contactNumber": "+233244123456",
+    "firstName": "Alice",
+    "lastName": "Mensah",
+    "region": "Greater Accra",
+    "district": "Kpone Katamanso",
+    "contactNumber": "0244123456",
     "registrationDate": "2023-01-15",
     "productsPurchased": ["Seeds", "Fertilizer", "Tools"]
     },
     {
     "farmerId": "F002",
-    "name": "Kwame Owusu",
-    "location": "Ashanti, Kumasi",
-    "contactNumber": "+233209876543",
+    "firstName": "Kwame", 
+    "lastName": "Owusu",
+    "region": "Ashanti", 
+    "district": "Kumasi",
+    "contactNumber": "0209876543",
     "registrationDate": "2023-02-20",
-    "productsPurchased": ["Fertilizer", "Pesticides"] // this would be displayed in a popup component showing the list
+    "productsPurchased": ["Fertilizer", "Pesticides"]
     },
     {
     "farmerId": "F003",
-    "name": "Ama Koomson",
-    "location": "Central, Cape Coast",
-    "contactNumber": "+233501122334",
+    "firstName": "Ama", 
+    "lastName": "Koomson",
+    "region": "Central", 
+    "district": "Cape Coast",
+    "contactNumber": "0501122334",
     "registrationDate": "2023-03-10",
     "productsPurchased": ["Seeds", "Tools"]
     },
     {
     "farmerId": "F004",
-    "name": "John Appiah",
-    "location": "Western, Takoradi",
-    "contactNumber": "+233266789012",
+    "firstName": "John", 
+    "lastName": "Appiah",
+    "region": "Western", 
+    "district": "Takoradi",
+    "contactNumber": "0266789012",
     "registrationDate": "2023-04-05",
     "productsPurchased": ["Seeds", "Fertilizer", "Pesticides"]
     },
     {
     "farmerId": "F005",
-    "name": "Grace Amoah",
-    "location": "Eastern, Koforidua",
-    "contactNumber": "+233277889900",
+    "firstName": "Grace", 
+    "lastName": "Amoah",
+    "region": "Eastern", 
+    "district": "Koforidua",
+    "contactNumber": "0277889900",
     "registrationDate": "2023-05-12",
     "productsPurchased": ["Tools"]
     }

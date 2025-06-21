@@ -47,31 +47,13 @@ const AddFarmer = ({formData,setFormData}: FormProps) => {
   
   const newID = generateID(lastItemID)
 
-
   // function to update formData with values.
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name , value } = e.target
-    
-    if (name === "contactNumber"){ // compares name with contactNumber before execution
-      let convertedValue = value;
-
-      if(!value.startsWith("+233")){
-        convertedValue = value.replace(/^0+|^\+?/, ""); // removes any leading 0 or +
-        convertedValue = `+233${convertedValue}` // update the convertedValue with "+233" at the start
-      }
-
-      // return all other states and updates the contact number only
-      setFormData((prev) => ({
-        ...prev,  
-        contactNumber: convertedValue
-      }))
-
-    }else{
       setFormData((prev) => ({
         ...prev,  
         [name]: value
       }))
-    }
   }
 
   //function to submit the form
@@ -200,7 +182,7 @@ const AddFarmer = ({formData,setFormData}: FormProps) => {
                   id="contactNumber" 
                   type="number" 
                   name="contactNumber" 
-                  placeholder="+233256983879" 
+                  placeholder="0256983879" 
                   onChange={(e)=>handleChange(e)}
                   className={errors.contactNumber ? "border border-red-600" : ""} 
                 />

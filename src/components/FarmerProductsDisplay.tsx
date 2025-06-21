@@ -20,8 +20,6 @@ type Farmer = {
   lastName: string;
   region: string;
   district: string,
-  name: string;
-  location: string;
   contactNumber: string;
   registrationDate: string;
   productsPurchased: string[];
