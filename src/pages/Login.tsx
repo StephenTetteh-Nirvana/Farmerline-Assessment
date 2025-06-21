@@ -28,8 +28,7 @@ const Login : React.FC = () => {
       localStorage.setItem("User",JSON.stringify(true))
       navigate('/')
     }else{
-      toast("Login Failed",{
-        description: "Please check your credentials.",
+      toast("Wrong Credentials",{
         duration: 2000,
         position: "top-center",
         action: {
@@ -82,11 +81,11 @@ const Login : React.FC = () => {
             <div className='grid gap-2'>
               <Label htmlFor="email">Password</Label>
               <Input
-               id="password"
-               type="password"
-               value={password}
-               required
-               onChange={(e)=>setPassword(e.target.value)}
+                id="password"
+                type="password"
+                value={password}
+                required
+                onChange={(e)=>setPassword(e.target.value)}
                />
             </div>
           </div>

@@ -1,4 +1,4 @@
-import {
+  import {
     Table,
     TableBody,
     TableCell,
@@ -8,6 +8,7 @@ import {
   } from "@/components/ui/table"
   import { farmerData } from "../services/mockData"
   import { useEffect, useState } from "react"
+  import { Button } from "@/components/ui/button"
   import FarmerProductsDisplay from "./FarmerProductsDisplay"
 
   const DataTable: React.FC = () => {
@@ -17,22 +18,22 @@ import {
     
     //stores farmer Data in localStorage on page load
     useEffect(()=>{
-        const farmerArr = localStorage.getItem("FarmerData")
-        setAllFarmers(farmerArr !== null ? JSON.parse(farmerArr) : [])
-        
-        if(allFarmers.length === 0) {
-            localStorage.setItem("FarmerData",JSON.stringify(farmerData))
-          }
-      },[])
+      const farmerArr = localStorage.getItem("FarmerData")
+      setAllFarmers(farmerArr !== null ? JSON.parse(farmerArr) : [])
+      
+      if(allFarmers.length === 0) {
+        localStorage.setItem("FarmerData",JSON.stringify(farmerData))
+      }
+    },[])
       
     // type of array data for allFarmers state.
     type Farmer = {
-        farmerId: string;
-        name: string;
-        location: string;
-        contactNumber: string;
-        registrationDate: string;
-        productsPurchased: string[];
+      farmerId: string;
+      name: string;
+      location: string;
+      contactNumber: string;
+      registrationDate: string;
+      productsPurchased: string[];
     };
 
 
@@ -57,9 +58,10 @@ import {
             <TableCell>{farmer.contactNumber}</TableCell>
             <TableCell>{farmer.registrationDate}</TableCell>
             <TableCell>
-                <button onClick={()=>setId(farmer.farmerId)}>
-                  <FarmerProductsDisplay farmerId={id}/>
-                </button>
+            {/* / Replace this later(causing the button nested in another button error) */}
+              <Button onClick={()=>setId(farmer.farmerId)}>
+                <FarmerProductsDisplay farmerId={id}/>
+              </Button>
             </TableCell>
           </TableRow>
         ))}

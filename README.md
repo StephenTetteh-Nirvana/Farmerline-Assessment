@@ -3,6 +3,7 @@
 A simplified dashboard built with React that displays key farmer information.
 
 ## Login Credentials
+  Use the credentials below to login admin account :
 
 - Email: admin@farmerline.co
 - Password: password123
