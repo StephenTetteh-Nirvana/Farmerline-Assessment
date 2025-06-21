@@ -6,15 +6,11 @@
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
-  import { farmerData } from "../services/mockData"
   import { useEffect, useState } from "react"
   import { Pencil, Trash2 } from "lucide-react"
   import FarmerProductsDisplay from "./FarmerProductsDisplay"
 
   const DataTable: React.FC = () => {
-    const [id,setId] = useState("")
-    const [allFarmers, setAllFarmers] = useState<Farmer[]>([]);
-    
     // type of array data for allFarmers state.
     type Farmer = {
       farmerId: string;
@@ -28,21 +24,21 @@
       registrationDate: string;
       productsPurchased: string[];
     };
-
-
-    //stores farmer Data in localStorage on page load
+    const [id,setId] = useState("")
+    const [allFarmers, setAllFarmers] = useState<Farmer[]>([]);
+    
+    //runs every second to get latest data and stores farmer Data in state on initial load
     useEffect(()=>{
-      const farmerArr = localStorage.getItem("FarmerData")
-      const parsed = farmerArr !== null ? JSON.parse(farmerArr) : []
-      setAllFarmers(parsed)
-      
-      if(parsed.length === 0) {
-        localStorage.setItem("FarmerData",JSON.stringify(farmerData))
-      }
+      setInterval(()=>{
+        console.log("running every second")
+        const farmerArr = localStorage.getItem("FarmerData")
+        const parsed = farmerArr !== null ? JSON.parse(farmerArr) : []
+        setAllFarmers(parsed)
+      },1000)
     },[])
+
       
-
-
+      
   return(
     <Table className="border border-slate-200 mt-3">
       <TableHeader>

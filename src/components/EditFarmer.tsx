@@ -14,16 +14,13 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
 import { formSchema } from "@/schema/formSchema"
-import { toast } from 'sonner'
-
 import type {FormData,SchemaErrors } from "@/schema/formSchema"
 import * as z from "zod/v4"
 import DatePicker from "./DatePicker"
 import ProductsDropdown from "./ProductsDropdown"
 
 
-const AddFarmer = () => {
-
+const EditFarmer = () => {
   const [formData,setFormData] = useState<FormData>({
     farmerId: "",
     firstName:"",
@@ -34,23 +31,22 @@ const AddFarmer = () => {
     registrationDate: "",
     productsPurchased: []
   })
+
   const [errors,setErrors] = useState<SchemaErrors>({})
-  const [open,setOpen] = useState(false)
   
   const localStoreFarmerData = localStorage.getItem("FarmerData")
-  const parsedData = localStoreFarmerData !== null ? JSON.parse(localStoreFarmerData) : null 
-
-  const lastItem = parsedData?.at(-1)
-  const lastItemID = lastItem?.farmerId
+  const parsedData = localStoreFarmerData !== null ? JSON.parse(localStoreFarmerData) : [] 
+  const lastItem = parsedData.at(-1)
+  const lastItemID = lastItem.farmerId
   
   // this logic generates a new dummy id for our new product.
   const generateID = (lastItemID: string) =>{
-    const extractNumericValue = lastItemID?.slice(1)
+    const extractNumericValue = lastItemID.slice(1)
     const newNumericValue = Number(extractNumericValue) + 1;
     const newID = `F00${String(newNumericValue)}`
     return newID
   }
-  
+
   const newID = generateID(lastItemID)
 
 
@@ -90,25 +86,12 @@ const AddFarmer = () => {
       const flattenedErrorArr = z.flattenError(result.error)
       setErrors(flattenedErrorArr.fieldErrors)
     }else{
-      //Insert new Id and update localStorage with newData
+      //Generate and insert new Id
       const updatedFormData = {...formData, farmerId: newID}
       setFormData(updatedFormData);
       const newFarmerData = [...parsedData, updatedFormData]
       localStorage.setItem("FarmerData",JSON.stringify(newFarmerData))
-      
-      //Toast message when farmer is added successfully
-      toast("New Farmer Added",{
-        duration: 2500,
-        position: "top-center",
-        action: {
-          label: "OK",
-          onClick: () => console.log("success"),
-        },
-      });
-      clearFields() // clear fields after adding new farmer
-      setTimeout(() => {
-        setOpen(false);
-      }, 500);
+      console.log("Data",formData)
     }
   }
 
@@ -122,14 +105,14 @@ const AddFarmer = () => {
       district:"",
       contactNumber:"",
       registrationDate: "",
-      productsPurchased: []
+      productsPurchased: [""]
     })
 
     setErrors({})
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog>
       <DialogTrigger asChild>
       <Button className='bg-[#2666CF] rounded-sm flex items-center gap-2
         text-white hover:bg-[#2666CF] hover:text-white hover:cursor-pointer
@@ -219,29 +202,26 @@ const AddFarmer = () => {
               </div>
             </section>
 
-            <section>
-              <div className="grid gap-3">
-                <Label htmlFor="productsPurchased">Products Purchased</Label>
-                <ProductsDropdown formData={formData} setFormData={setFormData}/>
-                <span className="text-[12px] text-red-600">{!formData.productsPurchased && "Please select product(s)"}</span>
-              </div>
-  
-              <div>
-                <ul>
-                  <p className="text-[13px] font-medium">You have selected {formData.productsPurchased.length} product(s).</p>
-                  {formData.productsPurchased.map((data,index)=>(
-                    <li key={index} className="text-[12px]">{data ? data : ""}</li>
-                  ))}
-                </ul>
-              </div>
-            </section>
-          </div>
+            <div className="grid gap-3">
+              <Label htmlFor="productsPurchased">Products Purchased</Label>
+              <ProductsDropdown formData={formData} setFormData={setFormData}/>
+              <span className="text-[12px] text-red-600">{!formData.productsPurchased && "Please select product(s)"}</span>
+            </div>
 
+            <div>
+              <ul>
+                <p className="text-[13px] font-medium">You have selected {formData.productsPurchased.length} product(s).</p>
+                {formData.productsPurchased.map((data,index)=>(
+                  <li key={index} className="text-[12px]">{data ? data : ""}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
           <DialogFooter className="mt-4">
             <DialogClose asChild>
               <Button variant="outline" onClick={()=>clearFields()}>Cancel</Button>
             </DialogClose>
-              <Button type="submit">Save changes</Button>
+            <Button type="submit">Save changes</Button>
           </DialogFooter>
         </form>
       </DialogContent>
@@ -249,5 +229,5 @@ const AddFarmer = () => {
   )
 }
 
-export default AddFarmer;
+export default EditFarmer;
 
