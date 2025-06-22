@@ -6,10 +6,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useEffect, useState } from "react";
+
+import { Input } from "@/components/ui/input";
+import type { FormData } from "@/schema/formSchema";
+import React, { useEffect, useState } from "react";
 import { Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
-import type { FormData } from "@/schema/formSchema";
 import FarmerProductsDisplay from "./FarmerProductsDisplay";
 import EditFarmer from "./EditFarmer";
 import AddFarmer from "./AddFarmer";
@@ -31,7 +33,9 @@ type FormProps = {
 };
 
 const DataTable = ({ formData, setFormData }: FormProps) => {
-  const [id, setId] = useState("");
+  const [id, setId] = useState("")
+  const [searchTerm,setSearchTerm] = useState("")
+  const [searchResults,setSearchResults] = useState<Farmer[]>([])
   const [allFarmers, setAllFarmers] = useState<Farmer[]>([]);
 
   //runs get latest data from localStorage whenever formData changes.
@@ -39,7 +43,26 @@ const DataTable = ({ formData, setFormData }: FormProps) => {
     const farmerArr = localStorage.getItem("FarmerData");
     const parsed = farmerArr !== null ? JSON.parse(farmerArr) : [];
     setAllFarmers(parsed);
+    setSearchResults(parsed)
   }, [formData]);
+
+  // function to handle search 
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const {value} = e.target
+    setSearchTerm(value)
+
+    if(value.trim() === ""){
+      setSearchResults(allFarmers)
+    }else{
+      const result = allFarmers.filter((f)=> 
+        f.firstName.toLowerCase().includes(value.toLowerCase()) || 
+        f.lastName.toLowerCase().includes(value.toLowerCase()) || 
+        f.farmerId.toLowerCase().includes(value.toLowerCase())
+      )
+      setSearchResults(result)
+      console.log("allFarmers",allFarmers)
+    }
+  }
 
   const deleteFarmerData = (id: string) => {
     const filteredData = allFarmers.filter((f: Farmer) => f.farmerId !== id);
@@ -61,7 +84,16 @@ const DataTable = ({ formData, setFormData }: FormProps) => {
 
   return (
     <>
-      <AddFarmer formData={formData} setFormData={setFormData} />
+      <div className="flex gap-3">
+        <AddFarmer formData={formData} setFormData={setFormData} />
+        <Input 
+          id="search" 
+          placeholder="Search by name or ID"
+          className="max-w-[180px]"
+          value={searchTerm}
+          onChange={(e)=>handleSearch(e)}
+        />
+      </div>
       <Table className="border border-slate-200 mt-3">
         <TableHeader>
           <TableRow>
@@ -75,7 +107,7 @@ const DataTable = ({ formData, setFormData }: FormProps) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {allFarmers.length > 0 ? allFarmers.map((farmer) => (
+          {searchResults.length > 0 ? searchResults.map((farmer) => (
             <TableRow key={farmer.farmerId}>
               <TableCell className="font-medium">{farmer.farmerId}</TableCell>
               <TableCell>{farmer.firstName + " " + farmer.lastName}</TableCell>

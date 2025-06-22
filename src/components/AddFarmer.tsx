@@ -111,12 +111,13 @@ const AddFarmer = ({formData,setFormData}: FormProps) => {
       if (!isOpen) {
         clearFields(); // Clear form when dialog closes
       }
-    }}>
+      }}
+    >
       <DialogTrigger asChild>
       <Button className='bg-[#2666CF] rounded-sm flex items-center gap-2
         text-white hover:bg-[#2666CF] hover:text-white hover:cursor-pointer
         '
-       >
+      >
         <Plus/>
         Add Farmer
       </Button>
@@ -137,7 +138,8 @@ const AddFarmer = ({formData,setFormData}: FormProps) => {
                 <Input 
                   id="firstName" 
                   name="firstName" 
-                  placeholder="Stephen" value={formData.firstName} 
+                  placeholder="Stephen" 
+                  value={formData.firstName} 
                   onChange={(e)=>handleChange(e)}
                   className={errors.firstName ? "border border-red-600" : ""}
                   />
@@ -148,7 +150,8 @@ const AddFarmer = ({formData,setFormData}: FormProps) => {
                 <Input 
                   id="lastName" 
                   name="lastName" 
-                  placeholder="Tetteh" value={formData.lastName} 
+                  placeholder="Tetteh" 
+                  value={formData.lastName} 
                   onChange={(e)=>handleChange(e)}
                   className={errors.lastName ? "border border-red-600" : ""}
                   />
@@ -162,7 +165,8 @@ const AddFarmer = ({formData,setFormData}: FormProps) => {
                 <Input 
                   id="region" 
                   name="region" 
-                  placeholder="Central" value={formData.region} 
+                  placeholder="Central" 
+                  value={formData.region} 
                   onChange={(e)=>handleChange(e)}
                   className={errors.region ? "border border-red-600" : ""}
                   />
@@ -173,7 +177,8 @@ const AddFarmer = ({formData,setFormData}: FormProps) => {
                 <Input 
                   id="district" 
                   name="district" 
-                  placeholder="Accra" value={formData.district} 
+                  placeholder="Accra" 
+                  value={formData.district} 
                   onChange={(e)=>handleChange(e)}
                   className={errors.district ? "border border-red-600" : ""}
                   />
