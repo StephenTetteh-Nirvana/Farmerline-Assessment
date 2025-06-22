@@ -1,15 +1,11 @@
 import { useEffect,useState } from 'react'
 import { farmerData } from '@/services/mockData'
-import type { FormData } from '@/schema/formSchema'
-import AddFarmer from '@/components/AddFarmer'
 import DataTable from '@/components/DataTable'
-import TotalFarmers from '@/components/TotalFarmers'
+import TotalFarmers from '@/components/DashboardCards'
 
 const Home = () => {
-
-  console.log(farmerData)
-
-  const [formData,setFormData] = useState<FormData>({
+  
+  const [formData,setFormData] = useState({
     farmerId: "",
     firstName:"",
     lastName:"",
@@ -36,7 +32,6 @@ const Home = () => {
         <TotalFarmers/>
       </div>
       <div className='mt-5'>
-        <AddFarmer formData={formData} setFormData={setFormData}/>
         <DataTable formData={formData} setFormData={setFormData}/>
       </div>
     </div>

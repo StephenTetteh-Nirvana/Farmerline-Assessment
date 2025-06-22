@@ -12,7 +12,8 @@
   import type { FormData } from "@/schema/formSchema"
   import FarmerProductsDisplay from "./FarmerProductsDisplay"
   import EditFarmer from "./EditFarmer";
-  
+  import AddFarmer from "./AddFarmer";
+
   type Farmer = {
     farmerId: string;
     firstName: string;
@@ -23,19 +24,13 @@
     registrationDate: string;
     productsPurchased: string[];
   };
+  
+  type FormProps = {
+    formData: FormData,
+    setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+  }
 
-  const DataTable = () => {
-
-    const [formData,setFormData] = useState<FormData>({
-      farmerId: "",
-      firstName:"",
-      lastName:"",
-      region:"",
-      district:"",
-      contactNumber:"",
-      registrationDate: "",
-      productsPurchased: []
-    })
+  const DataTable = ({formData,setFormData}: FormProps) => {
 
     const [id,setId] = useState("")
     const [allFarmers, setAllFarmers] = useState<Farmer[]>([]);
@@ -59,10 +54,15 @@
           onClick: () => console.log("deleted"),
         },
       });
+
+      setTimeout(() => {
+        window.location.reload()
+      }, 500);
     }
 
   return(
     <>
+    <AddFarmer formData={formData} setFormData={setFormData}/>
     <Table className="border border-slate-200 mt-3">
       <TableHeader>
         <TableRow>

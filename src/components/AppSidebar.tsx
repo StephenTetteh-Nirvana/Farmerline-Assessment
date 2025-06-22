@@ -28,11 +28,6 @@ const items = [
     icon: LayoutDashboard,
   },
   {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
     title: "Settings",
     url: "#",
     icon: Settings,

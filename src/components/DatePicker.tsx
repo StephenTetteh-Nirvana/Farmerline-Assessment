@@ -30,7 +30,7 @@ const DatePicker = ({setFormData,foundFarmer}: FormProps) => {
             id="date"
             className="justify-between font-normal w-full"
           >
-            {foundFarmer ? foundFarmer.registrationDate : date ? date.toLocaleDateString() : "Select date"}
+            {foundFarmer ? foundFarmer.registrationDate : date ? date.toLocaleDateString() : "Select a date"}
             <ChevronDownIcon />
           </Button>
         </PopoverTrigger>

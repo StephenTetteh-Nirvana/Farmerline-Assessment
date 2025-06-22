@@ -72,7 +72,7 @@ const AddFarmer = ({formData,setFormData}: FormProps) => {
       const newFarmerData = [...parsedData, updatedFormData]
       localStorage.setItem("FarmerData",JSON.stringify(newFarmerData))
       
-      //Toast message when farmer is added successfully
+      // Toast message when farmer is added successfully
       toast("New Farmer Added",{
         duration: 2500,
         position: "top-center",
@@ -84,6 +84,7 @@ const AddFarmer = ({formData,setFormData}: FormProps) => {
       clearFields() // clear fields after adding new farmer
       setTimeout(() => {
         setOpen(false);
+        window.location.reload()
       }, 500);
     }
   }
@@ -105,7 +106,12 @@ const AddFarmer = ({formData,setFormData}: FormProps) => {
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={(isOpen) => {
+      setOpen(isOpen);
+      if (!isOpen) {
+        clearFields(); // Clear form when dialog closes
+      }
+    }}>
       <DialogTrigger asChild>
       <Button className='bg-[#2666CF] rounded-sm flex items-center gap-2
         text-white hover:bg-[#2666CF] hover:text-white hover:cursor-pointer
@@ -190,7 +196,7 @@ const AddFarmer = ({formData,setFormData}: FormProps) => {
               </div>
               <div className="grid gap-3">
                 <Label htmlFor="registrationDate">Registration Date</Label>
-                <DatePicker setFormData={setFormData}/>
+                <DatePicker setFormData={setFormData} foundFarmer={formData}/>
                 <span className="text-[12px] text-red-600">{!formData.registrationDate && "Please select a date"}</span>
               </div>
             </section>
@@ -214,10 +220,10 @@ const AddFarmer = ({formData,setFormData}: FormProps) => {
           </div>
 
           <DialogFooter className="mt-4">
-            <DialogClose asChild>
+            <DialogClose>
               <Button variant="outline" onClick={()=>clearFields()}>Cancel</Button>
             </DialogClose>
-              <Button type="submit">Save changes</Button>
+            <Button type="submit">Save changes</Button>
           </DialogFooter>
         </form>
       </DialogContent>

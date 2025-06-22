@@ -87,6 +87,7 @@ const EditFarmer = ({farmerID,formData,setFormData}: EditProps) => {
       clearFields() // clear fields
       setTimeout(() => {
         setOpen(false);
+        window.location.reload()
       }, 500);
     }
   }
@@ -108,7 +109,12 @@ const EditFarmer = ({farmerID,formData,setFormData}: EditProps) => {
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={(isOpen) => {
+        setOpen(isOpen);
+        if (!isOpen) {
+          clearFields(); // Clear form when dialog closes
+        }
+      }}>
       <DialogTrigger asChild>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
