@@ -31,8 +31,8 @@
     },[])
 
     return (
-    <div className="flex gap-3 flex-wrap sm:gap-5">
-      <Card className="sm:w-[300px] sm:h-[150px] bg-[#2666CF] text-white">
+    <div className="grid grid-rows-1 sm:flex sm:flex-wrap w-[85%] gap-1.5 sm:gap-5">
+      <Card className="sm:w-[250px] sm:h-[150px] bg-[#2666CF] text-white">
         <CardContent className="text-white">
           <p className="">Total Farmers</p>
           <h2 className="text-4xl font-medium">{parsedData?.length > 0 ? parsedData?.length : 0}</h2>
@@ -40,7 +40,7 @@
         </CardContent>
       </Card>
   
-      <Card className="sm:w-[300px] sm:h-[150px] bg-[#38b000]">
+      <Card className="sm:w-[250px] sm:h-[150px] bg-[#38b000]">
         <CardContent className="text-white">
           <p>New Registrations</p>
           <h2 className="text-4xl font-medium">20</h2>
@@ -48,7 +48,7 @@
         </CardContent>
       </Card>
   
-      <Card className="sm:w-[300px] sm:h-[150px] bg-[#eeba0b]">
+      <Card className="sm:w-[250px] sm:h-[150px] bg-[#eeba0b]">
         <CardContent className="text-white">
           <p>Total Products Purchased</p>
           <h2 className="text-4xl font-medium">{total}</h2>
