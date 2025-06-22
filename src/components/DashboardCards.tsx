@@ -18,26 +18,26 @@
       productsPurchased: string[];
     };
 
-    const localStoreFarmerData = localStorage.getItem("FarmerData")
-    const parsed: Farmer[] = localStoreFarmerData !== null ? JSON.parse(localStoreFarmerData) : null 
-
     const [parsedData,setParsedData] = useState<Farmer[]>([])
     const [total,setTotal] = useState(0)
-
+    
     //Set state to parsed on initial load
-    const getLocalStorageData = () => {
+    const getLocalStorageData = (parsed: Farmer[]) => {
       setParsedData(parsed)
     }
-
+    
     // sum up total product purchases
-    const calculateTotalProducts = () => {
+    const calculateTotalProducts = (parsed: Farmer[]) => {
       const total = parsed?.reduce((total,farmer)=> total + farmer?.productsPurchased.length,0)
       setTotal(total)
     }
-
+    
     useEffect(()=>{
-      getLocalStorageData()
-      calculateTotalProducts()
+      const localStoreFarmerData = localStorage.getItem("FarmerData")
+      const parsed = localStoreFarmerData !== null ? JSON.parse(localStoreFarmerData) : null 
+
+      getLocalStorageData(parsed)
+      calculateTotalProducts(parsed)
     },[])
 
     return (

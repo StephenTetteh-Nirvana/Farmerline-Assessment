@@ -1,42 +1,39 @@
-import { useEffect,useState } from 'react'
-import { farmerData } from '@/services/mockData'
-import DataTable from '@/components/DataTable'
-import TotalFarmers from '@/components/DashboardCards'
+import { useEffect, useState } from "react";
+import { farmerData } from "@/services/mockData";
+import DataTable from "@/components/DataTable";
+import TotalFarmers from "@/components/DashboardCards";
 
 const Home = () => {
-  
-  const [formData,setFormData] = useState({
+  const [formData, setFormData] = useState({
     farmerId: "",
-    firstName:"",
-    lastName:"",
-    region:"",
-    district:"",
-    contactNumber:"",
+    firstName: "",
+    lastName: "",
+    region: "",
+    district: "",
+    contactNumber: "",
     registrationDate: "",
-    productsPurchased: []
-  })
+    productsPurchased: [],
+  });
 
   // save mockData to localStorage on page load
- useEffect(() => {
-  const stored = localStorage.getItem("FarmerData");
+  useEffect(() => {
+    const stored = localStorage.getItem("FarmerData");
 
-  if (!stored || stored === "null") {
-    localStorage.setItem("FarmerData", JSON.stringify(farmerData));
-  }
-}, []);
-
+    if (!stored || stored === "null") {
+      localStorage.setItem("FarmerData", JSON.stringify(farmerData));
+    }
+  }, []);
 
   return (
     <div>
-      <div className='flex gap-3'>
-        <TotalFarmers/>
+      <div className="flex gap-3">
+        <TotalFarmers />
       </div>
-      <div className='mt-5'>
-        <DataTable formData={formData} setFormData={setFormData}/>
+      <div className="mt-5">
+        <DataTable formData={formData} setFormData={setFormData} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-
-export default Home
+export default Home;
