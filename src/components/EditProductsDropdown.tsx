@@ -8,41 +8,44 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import type { FormData } from "@/schema/formSchema"
+import { useEffect, useState } from "react"
 
-interface ProductsDropdownProps {
-  formData: FormData,
-  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+interface EditProductsDropdownProps {
+  foundFarmer: FormData
 }
 
-const ProductsDropdown = ({formData,setFormData}: ProductsDropdownProps) => {
+const EditProductsDropdown = ({foundFarmer}: EditProductsDropdownProps) => {
+
+    const [selectedProducts, setSelectedProducts] = useState<string[]>(foundFarmer.productsPurchased ?? []);
 
     // first function accepts product and second function gets called when checkbox changes
     const handleChange = (product: string) => (checked: boolean) => { 
-      setFormData((prev) => {
         //this function appends or removes products based ont the checked condition
-        const updatedProducts = checked
-          ? [...prev.productsPurchased, product]
-          : prev.productsPurchased.filter((p) => p !== product);
-      
-        return {
-          ...prev,
-          productsPurchased: updatedProducts,
-        };
-      });
+            const updatedProducts = checked
+            ? [...selectedProducts, product]
+            : selectedProducts.filter((p) => p !== product);
+            
+            console.log("updatedFarmerFound:",updatedProducts)
+
+            //   console.log("FOUNDFAMER:",foundFarmer)
     };
+
+    useEffect(()=>{
+        setSelectedProducts(foundFarmer.productsPurchased)
+    },[])
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">Select</Button>
+        <Button variant="outline">Add/Remove</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>Products</DropdownMenuLabel>
         <DropdownMenuSeparator />
-          {["Seeds", "Fertilizers", "Pesticides", "Tools"].map((product) => (
+          {["Seeds", "Fertilizer", "Pesticides", "Tools"].map((product) => (
             <DropdownMenuCheckboxItem
               key={product}
-              checked={formData.productsPurchased.includes(product)}
+              checked={selectedProducts.includes(product)}
               onCheckedChange={handleChange(product)}
             >
               {product}
@@ -53,4 +56,4 @@ const ProductsDropdown = ({formData,setFormData}: ProductsDropdownProps) => {
   )
 }
 
-export default ProductsDropdown;
+export default EditProductsDropdown;

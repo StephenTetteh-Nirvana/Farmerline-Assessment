@@ -17,7 +17,7 @@ interface SortingProps {
 
 const Sorting = ({searchResults,setSearchResults}: SortingProps) => {
 
-  const headers = ["Name","RegistrationDate"]
+  const headers = ["Name","RegistrationDate","Region","District"]
   const orders = ["Asc","Desc"]
 
   const [selectedHeader,setSelectedHeader] = useState("")
@@ -34,20 +34,33 @@ const Sorting = ({searchResults,setSearchResults}: SortingProps) => {
   useEffect(() => {
     if (!selectedHeader || !selectedOrder) return;
 
+
+    // Manual data sorting function
     const sorted  = [...searchResults].sort((a,b)=>{
       if(selectedHeader === "Name"){
         const nameA = a.lastName.toLowerCase()
         const nameB = b.lastName.toLowerCase()
-
-        return selectedOrder === "Asc" ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA)
+        return selectedOrder === "Asc" ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA) // compares strings like the localeCompare(nameA)
       }
       
-      if( selectedHeader === "RegistrationDate"){
+      else if( selectedHeader === "RegistrationDate"){
         const dateA = a.registrationDate.toLowerCase()
         const dateB = b.registrationDate.toLowerCase()
-        
         return selectedOrder === "Asc" ? dateA.localeCompare(dateB) : dateB.localeCompare(dateA)
       }
+
+      else if(selectedHeader === "Region"){
+        const regionA = a.region.toLowerCase()
+        const regionB = b.region.toLowerCase()
+        return selectedOrder === "Asc" ? regionA.localeCompare(regionB) : regionB.localeCompare(regionA)
+      }
+
+      else if(selectedHeader === "District"){
+        const districtA = a.district.toLowerCase()
+        const districtB = b.district.toLowerCase()
+        return selectedOrder === "Asc" ? districtA.localeCompare(districtB) : districtB.localeCompare(districtA)
+      }
+
       
       return 0; // keep order if nothing changed
     })
