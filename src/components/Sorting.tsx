@@ -8,13 +8,14 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import type { Farmer } from "@/types/types"
-import { useState,useEffect } from "react"
+import React, { useState,useEffect } from "react"
 
 interface SortingProps {
   searchResults: Farmer[]
+  setSearchResults: React.Dispatch<React.SetStateAction<Farmer[]>>
 }
 
-const Sorting = ({searchResults}: SortingProps) => {
+const Sorting = ({searchResults,setSearchResults}: SortingProps) => {
 
   const headers = ["Name","RegistrationDate"]
   const orders = ["Asc","Desc"]
@@ -33,26 +34,27 @@ const Sorting = ({searchResults}: SortingProps) => {
   useEffect(() => {
     if (!selectedHeader || !selectedOrder) return;
 
-    const sorted = [...searchResults].sort((a,b)=>{
+    const sorted  = [...searchResults].sort((a,b)=>{
       if(selectedHeader === "Name"){
         const nameA = a.lastName.toLowerCase()
         const nameB = b.lastName.toLowerCase()
 
         return selectedOrder === "Asc" ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA)
       }
-
+      
       if( selectedHeader === "RegistrationDate"){
         const dateA = a.registrationDate.toLowerCase()
         const dateB = b.registrationDate.toLowerCase()
-
+        
         return selectedOrder === "Asc" ? dateA.localeCompare(dateB) : dateB.localeCompare(dateA)
       }
-
+      
       return 0; // keep order if nothing changed
     })
-
+    
     console.log("sorted Data:",sorted)
-
+    
+    setSearchResults(sorted)
     // setSortedData(sorted);
   }, [selectedHeader, selectedOrder]);
   

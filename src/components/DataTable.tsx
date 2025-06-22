@@ -86,7 +86,7 @@ const DataTable = ({ formData, setFormData }: DataTableProps) => {
           />
         </div>
         <div className="gap-2">
-          <Sorting searchResults={searchResults}/>
+          <Sorting searchResults={searchResults} setSearchResults={setSearchResults}/>
         </div>
       </div>
       <Table className="border border-slate-200 mt-3">
