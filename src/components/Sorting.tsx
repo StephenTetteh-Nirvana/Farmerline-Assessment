@@ -60,10 +60,10 @@ const Sorting = ({searchResults,setSearchResults}: SortingProps) => {
   
 
   return (
-    <div className="flex gap-3">
+    <div className="flex gap-3 mt-4">
     <Select onValueChange={handleHeaderSelect}>
-      <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Select header to sort" />
+      <SelectTrigger className="w-[150px] sm:w-[180px]">
+        <SelectValue placeholder="Select header" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
@@ -76,7 +76,7 @@ const Sorting = ({searchResults,setSearchResults}: SortingProps) => {
     </Select>
 
     <Select onValueChange={handleOrderSelect}>
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger className="w-[100px] sm:w-[180px]">
         <SelectValue placeholder="Sort by" />
       </SelectTrigger>
       <SelectContent>

@@ -74,7 +74,7 @@ const DataTable = ({ formData, setFormData }: DataTableProps) => {
 
   return (
     <>
-      <div className="flex items-center gap-3">
+      <div className="flex-col items-center gap-3">
         <div className="flex gap-3">
           <AddFarmer formData={formData} setFormData={setFormData} />
           <Input 
@@ -85,7 +85,7 @@ const DataTable = ({ formData, setFormData }: DataTableProps) => {
             onChange={(e)=>handleSearch(e)}
           />
         </div>
-        <div className="gap-2">
+        <div>
           <Sorting searchResults={searchResults} setSearchResults={setSearchResults}/>
         </div>
       </div>
