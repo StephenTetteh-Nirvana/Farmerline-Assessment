@@ -1,21 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { farmerData } from "@/services/mockData";
 import DataTable from "@/components/DataTable";
 import DashboardCards from "@/components/DashboardCards";
 
 const Home = () => {
-  const [formData, setFormData] = useState({
-    farmerId: "",
-    firstName: "",
-    lastName: "",
-    region: "",
-    district: "",
-    contactNumber: "",
-    registrationDate: "",
-    productsPurchased: [],
-  });
-
-  // save mockData to localStorage on page load
+  
+  
+ // save mockData to localStorage on page load
   useEffect(() => {
     const stored = localStorage.getItem("FarmerData");
 
@@ -27,7 +18,7 @@ const Home = () => {
   return (
     <div className="w-[95%]">
       <DashboardCards />
-      <DataTable formData={formData} setFormData={setFormData} />
+      <DataTable/>
     </div>
   );
 };

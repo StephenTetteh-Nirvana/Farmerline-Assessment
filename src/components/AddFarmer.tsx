@@ -51,15 +51,19 @@ const AddFarmer = ({ formData, setFormData }: AddFarmerProps) => {
     } else {
       // this logic generates a new dummy id for our new product.
       const localStoreFarmerData = localStorage.getItem("FarmerData");
-      const parsedData =
-        localStoreFarmerData !== null ? JSON.parse(localStoreFarmerData) : null;
+      const parsedData = localStoreFarmerData !== null ? JSON.parse(localStoreFarmerData) : [];
+      let newID = ""
 
-      const lastItem = parsedData?.at(-1);
-      const lastItemID = lastItem?.farmerId;
-
-      const extractNumericValue = lastItemID?.slice(1);
-      const newNumericValue = Number(extractNumericValue) + 1;
-      const newID = `F00${String(newNumericValue)}`;
+      if(parsedData.length === 0) {
+        newID = "F001"
+      }else{
+        const lastItem = parsedData?.at(-1);
+        const lastItemID = lastItem?.farmerId;
+        
+        const extractNumericValue = lastItemID?.slice(1);
+        const newNumericValue = Number(extractNumericValue) + 1;
+        newID = `F00${String(newNumericValue)}`;
+      }
 
       //Insert new Id and update localStorage with newData
       const updatedFormData = { ...formData, farmerId: newID };

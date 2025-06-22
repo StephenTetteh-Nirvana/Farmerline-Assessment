@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Pencil } from "lucide-react";
 import {
   Dialog,
   DialogClose,
@@ -30,14 +31,11 @@ const EditFarmer = ({ farmerID, formData, setFormData }: EditFarmer) => {
   const parsedData = farmerArr !== null ? JSON.parse(farmerArr) : [];
   const foundFarmer = parsedData.find((f: FormData) => f.farmerId === farmerID);
 
-  const [open, setOpen] = useState(false);
   const [errors, setErrors] = useState<SchemaErrors>({});
 
   useEffect(() => {
     if (farmerID) {
       setFormData(foundFarmer);
-      setOpen(true); // automatically open when a farmer ID is set
-      console.log(foundFarmer);
     }
   }, [farmerID]);
 
@@ -84,7 +82,6 @@ const EditFarmer = ({ farmerID, formData, setFormData }: EditFarmer) => {
       });
       clearFields(); // clear fields
       setTimeout(() => {
-        setOpen(false);
         window.location.reload(); // load to fetch new data from localStorage
       }, 500);
     }
@@ -107,16 +104,13 @@ const EditFarmer = ({ farmerID, formData, setFormData }: EditFarmer) => {
   };
 
   return (
-    <Dialog
-      open={open}
-      onOpenChange={(isOpen) => {
-        setOpen(isOpen);
-        if (!isOpen) {
-          clearFields(); // Clear form when dialog closes
-        }
-      }}
-    >
-      <DialogTrigger asChild></DialogTrigger>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Pencil
+          size={17}
+          className="text-black cursor-pointer"
+        />
+      </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={(e) => handleSubmit(e)}>
           <DialogHeader>
@@ -133,7 +127,7 @@ const EditFarmer = ({ farmerID, formData, setFormData }: EditFarmer) => {
                   id="firstName"
                   name="firstName"
                   placeholder="Stephen"
-                  value={formData.firstName}
+                  value={formData?.firstName}
                   onChange={(e) => handleChange(e)}
                   className={errors.firstName ? "border border-red-600" : ""}
                 />
@@ -147,7 +141,7 @@ const EditFarmer = ({ farmerID, formData, setFormData }: EditFarmer) => {
                   id="lastName"
                   name="lastName"
                   placeholder="Tetteh"
-                  value={formData.lastName}
+                  value={formData?.lastName}
                   onChange={(e) => handleChange(e)}
                   className={errors.lastName ? "border border-red-600" : ""}
                 />
@@ -164,7 +158,7 @@ const EditFarmer = ({ farmerID, formData, setFormData }: EditFarmer) => {
                   id="region"
                   name="region"
                   placeholder="Central"
-                  value={formData.region}
+                  value={formData?.region}
                   onChange={(e) => handleChange(e)}
                   className={errors.region ? "border border-red-600" : ""}
                 />
@@ -178,7 +172,7 @@ const EditFarmer = ({ farmerID, formData, setFormData }: EditFarmer) => {
                   id="district"
                   name="district"
                   placeholder="Accra"
-                  value={formData.district}
+                  value={formData?.district}
                   onChange={(e) => handleChange(e)}
                   className={errors.district ? "border border-red-600" : ""}
                 />
@@ -196,7 +190,7 @@ const EditFarmer = ({ farmerID, formData, setFormData }: EditFarmer) => {
                   type="number"
                   name="contactNumber"
                   placeholder="0256983879"
-                  value={formData.contactNumber}
+                  value={formData?.contactNumber}
                   onChange={(e) => handleChange(e)}
                   className={
                     errors.contactNumber ? "border border-red-600" : ""
@@ -210,7 +204,7 @@ const EditFarmer = ({ farmerID, formData, setFormData }: EditFarmer) => {
                 <Label htmlFor="registrationDate">Registration Date</Label>
                 <DatePicker
                   setFormData={setFormData}
-                  foundFarmer={foundFarmer}
+                  foundFarmer={formData}
                 />
                 <span className="text-[12px] text-red-600">
                   {!formData.registrationDate && "Please select a date"}
@@ -220,18 +214,18 @@ const EditFarmer = ({ farmerID, formData, setFormData }: EditFarmer) => {
 
             <div className="grid gap-3">
               <Label htmlFor="productsPurchased">Products Purchased</Label>
-              <EditProductsDropdown foundFarmer={foundFarmer}/>
+              <EditProductsDropdown foundFarmer={formData} setFormData={setFormData}/>
               <span className="text-[12px] text-red-600">
-                {!foundFarmer.productsPurchased && "Please select product(s)"}
+                {!formData.productsPurchased && "Please select product(s)"}
               </span>
             </div>
 
             <div>
               <ul>
                 <p className="text-[13px] font-medium">
-                  You have selected {foundFarmer?.productsPurchased.length} product(s).
+                  You have selected {formData?.productsPurchased.length} product(s).
                 </p>
-                {foundFarmer?.productsPurchased.map(
+                {formData?.productsPurchased.map(
                   (data: string, index: number) => (
                     <li key={index} className="text-[12px]">
                       {data ? data : ""}

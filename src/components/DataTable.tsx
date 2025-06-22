@@ -8,9 +8,8 @@ import {
 } from "@/components/ui/table";
 
 import { Input } from "@/components/ui/input";
-import type { FormData } from "@/schema/formSchema";
-import React, { useEffect, useState } from "react";
-import { Pencil, Trash2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import type { Farmer } from "@/types/types";
 import FarmerProductsDisplay from "./FarmerProductsDisplay";
@@ -18,12 +17,18 @@ import EditFarmer from "./EditFarmer";
 import AddFarmer from "./AddFarmer";
 import Sorting  from "./Sorting";
 
-interface DataTableProps {
-  formData: FormData;
-  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
-};
+const DataTable = () => {
+  const [farmerData, setFarmerData] = useState({
+    farmerId: "",
+    firstName: "",
+    lastName: "",
+    region: "",
+    district: "",
+    contactNumber: "",
+    registrationDate: "",
+    productsPurchased: [],
+  });
 
-const DataTable = ({ formData, setFormData }: DataTableProps) => {
   const [id, setId] = useState("")
   const [searchTerm,setSearchTerm] = useState("")
   const [searchResults,setSearchResults] = useState<Farmer[]>([])
@@ -35,7 +40,7 @@ const DataTable = ({ formData, setFormData }: DataTableProps) => {
     const parsed = farmerArr !== null ? JSON.parse(farmerArr) : [];
     setAllFarmers(parsed);
     setSearchResults(parsed)
-  }, [formData]);
+  }, [farmerData]);
 
   // function to handle search 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,7 +81,7 @@ const DataTable = ({ formData, setFormData }: DataTableProps) => {
     <>
       <div className="flex-col items-center gap-3 mt-5">
         <div className="flex gap-3">
-          <AddFarmer formData={formData} setFormData={setFormData} />
+          <AddFarmer formData={farmerData} setFormData={setFarmerData} />
           <Input 
             id="search" 
             placeholder="Search by name/ID"
@@ -117,11 +122,13 @@ const DataTable = ({ formData, setFormData }: DataTableProps) => {
               </TableCell>
               <TableCell>
                 <div className="flex gap-1.5">
-                  <Pencil
-                    size={17}
-                    className="text-black cursor-pointer"
-                    onClick={() => setId(farmer.farmerId)}
-                  />
+                  <div onClick={()=> setId(farmer.farmerId)}>
+                  <EditFarmer
+                    farmerID={id}
+                    formData={farmerData}
+                    setFormData={setFarmerData}
+                    />
+                  </div>
                   <Trash2
                     size={17}
                     className="text-red-600 cursor-pointer"
@@ -138,13 +145,6 @@ const DataTable = ({ formData, setFormData }: DataTableProps) => {
           }
         </TableBody>
       </Table>
-      {id && (
-        <EditFarmer
-        farmerID={id}
-        formData={formData}
-        setFormData={setFormData}
-        />
-      )}
     </>
   );
 };

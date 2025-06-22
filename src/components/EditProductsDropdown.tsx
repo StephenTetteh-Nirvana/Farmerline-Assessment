@@ -8,31 +8,30 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import type { FormData } from "@/schema/formSchema"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 interface EditProductsDropdownProps {
-  foundFarmer: FormData
+  foundFarmer: FormData,
+  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
 }
 
-const EditProductsDropdown = ({foundFarmer}: EditProductsDropdownProps) => {
+const EditProductsDropdown = ({foundFarmer,setFormData}: EditProductsDropdownProps) => {
 
     const [selectedProducts, setSelectedProducts] = useState<string[]>(foundFarmer.productsPurchased ?? []);
 
     // first function accepts product and second function gets called when checkbox changes
     const handleChange = (product: string) => (checked: boolean) => { 
         //this function appends or removes products based ont the checked condition
-            const updatedProducts = checked
-            ? [...selectedProducts, product]
-            : selectedProducts.filter((p) => p !== product);
-            
-            console.log("updatedFarmerFound:",updatedProducts)
-
-            //   console.log("FOUNDFAMER:",foundFarmer)
+        const updatedProducts = checked
+        ? [...selectedProducts, product]
+        : selectedProducts.filter((p) => p !== product);
+        
+        setSelectedProducts(updatedProducts);
+        setFormData((prev) => ({
+            ...prev!,
+            productsPurchased: updatedProducts,
+        }));
     };
-
-    useEffect(()=>{
-        setSelectedProducts(foundFarmer.productsPurchased)
-    },[])
 
   return (
     <DropdownMenu>

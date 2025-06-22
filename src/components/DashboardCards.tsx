@@ -4,7 +4,7 @@
   } from "@/components/ui/card" 
   import { useEffect, useState } from "react"
   import type { Farmer } from "@/types/types";
-  
+
   
   const DashboardCards = () => {
 
@@ -30,29 +30,21 @@
       calculateTotalProducts(parsed)
     },[])
 
+
+
     return (
     <div className="w-full grid grid-rows-1 sm:flex sm:flex-wrap gap-1.5 sm:gap-5">
       <Card className="sm:w-[250px] sm:h-[150px] bg-[#2666CF] text-white">
         <CardContent className="text-white">
           <p className="">Total Farmers</p>
           <h2 className="text-4xl font-medium">{parsedData?.length > 0 ? parsedData?.length : 0}</h2>
-          <p className=" text-[15px] mt-1">+40% from last week</p>
         </CardContent>
       </Card>
   
       <Card className="sm:w-[250px] sm:h-[150px] bg-[#38b000]">
         <CardContent className="text-white">
-          <p>New Registrations</p>
-          <h2 className="text-4xl font-medium">20</h2>
-          <p className="text-[15px] mt-1">+25% from last week</p>
-        </CardContent>
-      </Card>
-  
-      <Card className="sm:w-[250px] sm:h-[150px] bg-[#eeba0b]">
-        <CardContent className="text-white">
           <p>Total Products Purchased</p>
           <h2 className="text-4xl font-medium">{total}</h2>
-          <p className="text-[15px] mt-1">+20% from last week</p>
         </CardContent>
       </Card>
 

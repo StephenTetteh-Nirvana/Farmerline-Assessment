@@ -38,6 +38,11 @@ A simplified dashboard built with React that displays key farmer information.
    }
    ```
 
+  ### Challenge I encoutered and how I "encountered"
+  The challenge I faced when building this was Typescript. This is my first project from scratch with TSX and JSX and I would say it was quite the struggle but it was worth it. I feel with time, this wouldn't be a challenge anymore.
+
+  I wouldn't say I encountered this because it threw me off the entire project and wasted time but I was able to find my way around with the help of documentation and CHATGPT.
+
 
 ## Project Structure
 
