@@ -3,20 +3,10 @@
     CardContent
   } from "@/components/ui/card" 
   import { useEffect, useState } from "react"
+  import type { Farmer } from "@/types/types";
   
   
   const DashboardCards = () => {
-
-    type Farmer = {
-      farmerId: string;
-      firstName: string;
-      lastName: string;
-      region: string;
-      district: string,
-      contactNumber: string;
-      registrationDate: string;
-      productsPurchased: string[];
-    };
 
     const [parsedData,setParsedData] = useState<Farmer[]>([])
     const [total,setTotal] = useState(0)

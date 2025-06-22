@@ -19,13 +19,13 @@ import * as z from "zod/v4"
 import DatePicker from "./DatePicker"
 import ProductsDropdown from "./ProductsDropdown"
 
-type EditProps = {
+interface EditFarmer {
   farmerID: string,
   formData: FormData,
   setFormData: React.Dispatch<React.SetStateAction<FormData>>
 }
 
-const EditFarmer = ({farmerID,formData,setFormData}: EditProps) => {
+const EditFarmer = ({farmerID,formData,setFormData}: EditFarmer) => {
     
   const farmerArr = localStorage.getItem("FarmerData")
   const parsedData = farmerArr !== null ? JSON.parse(farmerArr) : []
@@ -218,9 +218,7 @@ const EditFarmer = ({farmerID,formData,setFormData}: EditProps) => {
             </div>
           </div>
           <DialogFooter className="mt-4">
-            <DialogClose asChild>
-              <Button variant="outline" onClick={()=>clearFields()}>Cancel</Button>
-            </DialogClose>
+            <DialogClose onClick={()=>clearFields()}></DialogClose>
             <Button type="submit">Save changes</Button>
           </DialogFooter>
         </form>

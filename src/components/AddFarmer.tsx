@@ -21,12 +21,12 @@ import * as z from "zod/v4"
 import DatePicker from "./DatePicker"
 import ProductsDropdown from "./ProductsDropdown"
 
-type FormProps = {
+interface AddFarmerProps {
   formData: FormData,
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
 }
 
-const AddFarmer = ({formData,setFormData}: FormProps) => {
+const AddFarmer = ({formData,setFormData}: AddFarmerProps) => {
 
   const [errors,setErrors] = useState<SchemaErrors>({})
   const [open,setOpen] = useState(false)
@@ -81,9 +81,9 @@ const AddFarmer = ({formData,setFormData}: FormProps) => {
           onClick: () => console.log("success"),
         },
       });
-      clearFields() // clear fields after adding new farmer
       setTimeout(() => {
         setOpen(false);
+        clearFields() // clear fields after adding new farmer
         window.location.reload()
       }, 500);
     }
@@ -113,14 +113,12 @@ const AddFarmer = ({formData,setFormData}: FormProps) => {
       }
       }}
     >
-      <DialogTrigger asChild>
-      <Button className='bg-[#2666CF] rounded-sm flex items-center gap-2
+      <DialogTrigger className='bg-[#2666CF] rounded-sm flex items-center gap-2 px-2
         text-white hover:bg-[#2666CF] hover:text-white hover:cursor-pointer
         '
       >
-        <Plus/>
-        Add Farmer
-      </Button>
+        <Plus size={16}/>
+        <span className="text-[14px]">Add Farmer</span>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={(e)=>handleSubmit(e)}>
@@ -225,9 +223,7 @@ const AddFarmer = ({formData,setFormData}: FormProps) => {
           </div>
 
           <DialogFooter className="mt-4">
-            <DialogClose>
-              <Button variant="outline" onClick={()=>clearFields()}>Cancel</Button>
-            </DialogClose>
+            <DialogClose onClick={()=>clearFields()}></DialogClose>
             <Button type="submit">Save changes</Button>
           </DialogFooter>
         </form>

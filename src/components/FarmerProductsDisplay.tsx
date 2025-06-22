@@ -9,21 +9,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import type { Farmer } from "@/types/types"
 
-type ProductDisplayProps = {
+interface ProductDisplayProps {
   farmerId: string
 }
-
-type Farmer = {
-  farmerId: string;
-  firstName: string;
-  lastName: string;
-  region: string;
-  district: string,
-  contactNumber: string;
-  registrationDate: string;
-  productsPurchased: string[];
-};
 
 const FarmerProductsDisplay = ({ farmerId }: ProductDisplayProps) => {
   const farmerArr = localStorage.getItem("FarmerData")

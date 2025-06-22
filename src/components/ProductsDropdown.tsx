@@ -9,12 +9,12 @@ import {
 } from "@/components/ui/dropdown-menu"
 import type { FormData } from "@/schema/formSchema"
 
-type FormProps = {
+interface ProductsDropdownProps {
   formData: FormData,
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
 }
 
-const ProductsDropdown = ({formData,setFormData}: FormProps) => {
+const ProductsDropdown = ({formData,setFormData}: ProductsDropdownProps) => {
 
     // first function accepts product and second function gets called when checkbox changes
     const handleChange = (product: string) => (checked: boolean) => { 

@@ -11,12 +11,12 @@ import {
 
 import type { FormData } from "@/schema/formSchema"
 
-type FormProps = {
+interface DatePicker {
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
   foundFarmer: FormData | undefined
 }
 
-const DatePicker = ({setFormData,foundFarmer}: FormProps) => {
+const DatePicker = ({setFormData,foundFarmer}: DatePicker) => {
 
   const [open, setOpen] = useState(false)
   const [date, setDate] = useState<Date | undefined>(undefined);

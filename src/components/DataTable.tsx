@@ -12,27 +12,18 @@ import type { FormData } from "@/schema/formSchema";
 import React, { useEffect, useState } from "react";
 import { Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import type { Farmer } from "@/types/types";
 import FarmerProductsDisplay from "./FarmerProductsDisplay";
 import EditFarmer from "./EditFarmer";
 import AddFarmer from "./AddFarmer";
+import Sorting  from "./Sorting";
 
-type Farmer = {
-  farmerId: string;
-  firstName: string;
-  lastName: string;
-  region: string;
-  district: string;
-  contactNumber: string;
-  registrationDate: string;
-  productsPurchased: string[];
-};
-
-type FormProps = {
+interface DataTableProps {
   formData: FormData;
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
 };
 
-const DataTable = ({ formData, setFormData }: FormProps) => {
+const DataTable = ({ formData, setFormData }: DataTableProps) => {
   const [id, setId] = useState("")
   const [searchTerm,setSearchTerm] = useState("")
   const [searchResults,setSearchResults] = useState<Farmer[]>([])
@@ -84,15 +75,20 @@ const DataTable = ({ formData, setFormData }: FormProps) => {
 
   return (
     <>
-      <div className="flex gap-3">
-        <AddFarmer formData={formData} setFormData={setFormData} />
-        <Input 
-          id="search" 
-          placeholder="Search by name or ID"
-          className="max-w-[180px]"
-          value={searchTerm}
-          onChange={(e)=>handleSearch(e)}
-        />
+      <div className="flex items-center gap-3">
+        <div className="flex gap-3">
+          <AddFarmer formData={formData} setFormData={setFormData} />
+          <Input 
+            id="search" 
+            placeholder="Search by name or ID"
+            className="max-w-[180px]"
+            value={searchTerm}
+            onChange={(e)=>handleSearch(e)}
+          />
+        </div>
+        <div className="gap-2">
+          <Sorting searchResults={searchResults}/>
+        </div>
       </div>
       <Table className="border border-slate-200 mt-3">
         <TableHeader>

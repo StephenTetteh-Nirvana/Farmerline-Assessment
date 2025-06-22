@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { farmerData } from "@/services/mockData";
 import DataTable from "@/components/DataTable";
-import TotalFarmers from "@/components/DashboardCards";
+import DashboardCards from "@/components/DashboardCards";
 
 const Home = () => {
   const [formData, setFormData] = useState({
@@ -27,7 +27,7 @@ const Home = () => {
   return (
     <div>
       <div className="flex gap-3">
-        <TotalFarmers />
+        <DashboardCards />
       </div>
       <div className="mt-5">
         <DataTable formData={formData} setFormData={setFormData} />
