@@ -29,7 +29,7 @@ const App = () => {
       <SidebarProvider>
         {location.pathname !== "/login" && <AppSidebar/>}
         {location.pathname !== "/login" && <SidebarTrigger/>}
-        <main className="pt-3 w-full min-h-[100vh]">
+        <main className="pt-3 w-full overflow-hidden min-h-[100vh]">
           <Routes>
             <Route element={<ProtectedRoutes/>}>
               <Route path="/" element={<Home/>}></Route>

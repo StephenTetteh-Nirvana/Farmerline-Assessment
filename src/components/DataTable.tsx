@@ -74,13 +74,13 @@ const DataTable = ({ formData, setFormData }: DataTableProps) => {
 
   return (
     <>
-      <div className="flex-col items-center gap-3">
+      <div className="flex-col items-center gap-3 mt-5">
         <div className="flex gap-3">
           <AddFarmer formData={formData} setFormData={setFormData} />
           <Input 
             id="search" 
-            placeholder="Search by name or ID"
-            className="max-w-[180px]"
+            placeholder="Search by name/ID"
+            className="w-[160px]"
             value={searchTerm}
             onChange={(e)=>handleSearch(e)}
           />
@@ -89,7 +89,8 @@ const DataTable = ({ formData, setFormData }: DataTableProps) => {
           <Sorting searchResults={searchResults} setSearchResults={setSearchResults}/>
         </div>
       </div>
-      <Table className="border border-slate-200 mt-3">
+
+      <Table className="border border-slate-200 mt-4 w-full">
         <TableHeader>
           <TableRow>
             <TableHead>#</TableHead>
@@ -139,9 +140,9 @@ const DataTable = ({ formData, setFormData }: DataTableProps) => {
       </Table>
       {id && (
         <EditFarmer
-          farmerID={id}
-          formData={formData}
-          setFormData={setFormData}
+        farmerID={id}
+        formData={formData}
+        setFormData={setFormData}
         />
       )}
     </>

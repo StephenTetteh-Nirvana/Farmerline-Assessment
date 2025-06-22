@@ -25,13 +25,9 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
-      <div className="flex gap-3">
-        <DashboardCards />
-      </div>
-      <div className="mt-5">
-        <DataTable formData={formData} setFormData={setFormData} />
-      </div>
+    <div className="w-[95%]">
+      <DashboardCards />
+      <DataTable formData={formData} setFormData={setFormData} />
     </div>
   );
 };

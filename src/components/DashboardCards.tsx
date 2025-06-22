@@ -31,7 +31,7 @@
     },[])
 
     return (
-    <div className="grid grid-rows-1 sm:flex sm:flex-wrap w-[85%] gap-1.5 sm:gap-5">
+    <div className="w-full grid grid-rows-1 sm:flex sm:flex-wrap gap-1.5 sm:gap-5">
       <Card className="sm:w-[250px] sm:h-[150px] bg-[#2666CF] text-white">
         <CardContent className="text-white">
           <p className="">Total Farmers</p>
