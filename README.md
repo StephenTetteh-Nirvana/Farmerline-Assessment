@@ -63,6 +63,9 @@ A simplified dashboard built with React that displays key farmer information.
 - **`pages/`**  
   Route-based components. Each file or folder here maps to a page route.
 
+  - **`types/`**  
+- Exports types, this makes the code clean.
+
 ### Other Key Files
 
 - **`App.tsx`** — Root component that sets up routes and layout.

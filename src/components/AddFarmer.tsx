@@ -30,22 +30,6 @@ const AddFarmer = ({formData,setFormData}: AddFarmerProps) => {
 
   const [errors,setErrors] = useState<SchemaErrors>({})
   const [open,setOpen] = useState(false)
-  
-  const localStoreFarmerData = localStorage.getItem("FarmerData")
-  const parsedData = localStoreFarmerData !== null ? JSON.parse(localStoreFarmerData) : null 
-
-  const lastItem = parsedData?.at(-1)
-  const lastItemID = lastItem?.farmerId
-  
-  // this logic generates a new dummy id for our new product.
-  const generateID = (lastItemID: string) =>{
-    const extractNumericValue = lastItemID?.slice(1)
-    const newNumericValue = Number(extractNumericValue) + 1;
-    const newID = `F00${String(newNumericValue)}`
-    return newID
-  }
-  
-  const newID = generateID(lastItemID)
 
   // function to update formData with values.
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,6 +50,17 @@ const AddFarmer = ({formData,setFormData}: AddFarmerProps) => {
       const flattenedErrorArr = z.flattenError(result.error)
       setErrors(flattenedErrorArr.fieldErrors)
     }else{
+      // this logic generates a new dummy id for our new product.
+      const localStoreFarmerData = localStorage.getItem("FarmerData")
+      const parsedData = localStoreFarmerData !== null ? JSON.parse(localStoreFarmerData) : null 
+    
+      const lastItem = parsedData?.at(-1)
+      const lastItemID = lastItem?.farmerId
+
+      const extractNumericValue = lastItemID?.slice(1)
+      const newNumericValue = Number(extractNumericValue) + 1;
+      const newID = `F00${String(newNumericValue)}`
+
       //Insert new Id and update localStorage with newData
       const updatedFormData = {...formData, farmerId: newID}
       setFormData(updatedFormData);
@@ -84,7 +79,7 @@ const AddFarmer = ({formData,setFormData}: AddFarmerProps) => {
       setTimeout(() => {
         setOpen(false);
         clearFields() // clear fields after adding new farmer
-        window.location.reload()
+        window.location.reload() // load to fetch new data from localStorage
       }, 500);
     }
   }
@@ -192,6 +187,7 @@ const AddFarmer = ({formData,setFormData}: AddFarmerProps) => {
                   type="number" 
                   name="contactNumber" 
                   placeholder="0256983879" 
+                  value={formData.contactNumber}
                   onChange={(e)=>handleChange(e)}
                   className={errors.contactNumber ? "border border-red-600" : ""} 
                 />

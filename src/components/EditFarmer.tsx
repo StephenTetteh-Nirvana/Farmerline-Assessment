@@ -70,8 +70,7 @@ const EditFarmer = ({farmerID,formData,setFormData}: EditFarmer) => {
           return farmer;
         }
       });
-          
-      console.log("update:",updatedFormData)
+
       setFormData(updatedFormData);
       localStorage.setItem("FarmerData",JSON.stringify(updatedFormData))
 
@@ -87,7 +86,7 @@ const EditFarmer = ({farmerID,formData,setFormData}: EditFarmer) => {
       clearFields() // clear fields
       setTimeout(() => {
         setOpen(false);
-        window.location.reload()
+        window.location.reload() // load to fetch new data from localStorage
       }, 500);
     }
   }

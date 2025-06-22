@@ -51,7 +51,6 @@ const DataTable = ({ formData, setFormData }: DataTableProps) => {
         f.farmerId.toLowerCase().includes(value.toLowerCase())
       )
       setSearchResults(result)
-      console.log("allFarmers",allFarmers)
     }
   }
 

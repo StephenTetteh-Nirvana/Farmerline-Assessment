@@ -19,7 +19,7 @@ const Home = () => {
   useEffect(() => {
     const stored = localStorage.getItem("FarmerData");
 
-    if (!stored || stored === "null") {
+    if (!stored || stored === null) {
       localStorage.setItem("FarmerData", JSON.stringify(farmerData));
     }
   }, []);

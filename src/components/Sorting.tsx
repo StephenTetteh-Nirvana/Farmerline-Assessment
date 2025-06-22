@@ -8,10 +8,10 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import type { Farmer } from "@/types/types"
-import { useState } from "react"
+import { useState,useEffect } from "react"
 
 interface SortingProps {
-    searchResults: Farmer
+  searchResults: Farmer[]
 }
 
 const Sorting = ({searchResults}: SortingProps) => {
@@ -23,15 +23,39 @@ const Sorting = ({searchResults}: SortingProps) => {
   const [selectedOrder,setSelectedOrder] = useState("")
 
   const handleHeaderSelect = (value: string) => {
-    console.log(value)
     setSelectedHeader(value)
   }
 
   const handleOrderSelect = (value: string) => {
-    console.log(value)
     setSelectedOrder(value)
   }
 
+  useEffect(() => {
+    if (!selectedHeader || !selectedOrder) return;
+
+    const sorted = [...searchResults].sort((a,b)=>{
+      if(selectedHeader === "Name"){
+        const nameA = a.lastName.toLowerCase()
+        const nameB = b.lastName.toLowerCase()
+
+        return selectedOrder === "Asc" ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA)
+      }
+
+      if( selectedHeader === "RegistrationDate"){
+        const dateA = a.registrationDate.toLowerCase()
+        const dateB = b.registrationDate.toLowerCase()
+
+        return selectedOrder === "Asc" ? dateA.localeCompare(dateB) : dateB.localeCompare(dateA)
+      }
+
+      return 0; // keep order if nothing changed
+    })
+
+    console.log("sorted Data:",sorted)
+
+    // setSortedData(sorted);
+  }, [selectedHeader, selectedOrder]);
+  
 
   return (
     <div className="flex gap-3">
